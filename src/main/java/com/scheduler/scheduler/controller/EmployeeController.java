@@ -1,7 +1,7 @@
 package com.scheduler.scheduler.controller;
 
 import com.scheduler.scheduler.model.Employee;
-import com.scheduler.scheduler.repository.EmployeeRepository;
+import com.scheduler.scheduler.repository.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,9 +10,9 @@ import java.util.List;
 @RequestMapping("/api/employees")
 public class EmployeeController {
 
-    private final EmployeeRepository employeeRepository;
+    private final UserRepository employeeRepository;
 
-    public EmployeeController(EmployeeRepository employeeRepository) {
+    public EmployeeController(UserRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
 
