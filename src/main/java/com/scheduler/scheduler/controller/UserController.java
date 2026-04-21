@@ -1,9 +1,9 @@
 package com.scheduler.scheduler.controller;
 
+import com.scheduler.scheduler.dto.UserDTO;
 import com.scheduler.scheduler.dto.UserDetailsDTO;
 import com.scheduler.scheduler.model.Role;
 import com.scheduler.scheduler.model.User;
-import com.scheduler.scheduler.repository.UserRepository;
 import com.scheduler.scheduler.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +21,12 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
+    GetMapping
+    public UserDTO getUser(Long id) {
+        return userService.getUser(id);
+    }
+
+    @GetMapping("/all")
     public List<User> getAll() {
         return userService.findAll();
     }

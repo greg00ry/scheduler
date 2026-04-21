@@ -5,6 +5,8 @@ import com.scheduler.scheduler.model.User;
 import com.scheduler.scheduler.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class UserService {
@@ -26,6 +28,18 @@ public class UserService {
         dto.setRole(user.getRole());
 
         return dto;
+    }
+
+    public List<UserDTO> getAllUser() {
+        return userRepository.findAll().stream()
+                .map(user -> {
+                    UserDTO dto = new UserDTO();
+                    dto.setId(user.getId());
+                    dto.setFirstName(user.getFirstName());
+                    dto.setLastName(user.getLastName());
+                    dto.setRole(user.getRole());
+                    return dto;
+                }).toList();
     }
 
     public UserDetailsDTO getUserDetails(Long id) {
