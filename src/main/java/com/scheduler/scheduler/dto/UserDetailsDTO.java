@@ -4,9 +4,11 @@ import com.scheduler.scheduler.model.Role;
 import com.scheduler.scheduler.model.WorkingHours;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
 import java.util.List;
 
+@Data
 public class UserDetailsDTO {
     @NotNull
     private Long id;
@@ -16,8 +18,8 @@ public class UserDetailsDTO {
     private String lastName;
     @NotNull
     private Role role;
-    @NotBlank
+    @NotNull
     private List<AbsenceDTO> absences;
-    @NotBlank
+    @NotNull
     private List<WorkingHoursDTO> workingHoursList;
 }
