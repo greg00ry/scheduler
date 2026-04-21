@@ -35,38 +35,17 @@ public class UserService {
 
     public List<UserDTO> getAllUser() {
         return userRepository.findAll().stream()
-                .map(user -> {
-                    UserDTO dto = new UserDTO();
-                    dto.setId(user.getId());
-                    dto.setFirstName(user.getFirstName());
-                    dto.setLastName(user.getLastName());
-                    dto.setRole(user.getRole());
-                    return dto;
-                }).toList();
+                .map(this::createUserDTO).toList();
     }
 
     public List<UserDTO> findAvailableUsersByDate(LocalDateTime date) {
         return userRepository.findAvailableUsersByDate(date).stream()
-                .map(user -> {
-                    UserDTO dto = new UserDTO();
-                    dto.setId(user.getId());
-                    dto.setFirstName(user.getFirstName());
-                    dto.setLastName(user.getLastName());
-                    dto.setRole(user.getRole());
-                    return dto;
-                }).toList();
+                .map(this::createUserDTO).toList();
     }
 
     public List<UserDTO> findByRole(Role role) {
         return userRepository.findByRole(role).stream()
-                .map(user -> {
-                    UserDTO dto = new UserDTO();
-                    dto.setId(user.getId());
-                    dto.setFirstName(user.getFirstName());
-                    dto.setLastName(user.getLastName());
-                    dto.setRole(user.getRole());
-                    return dto;
-                }).toList();
+                .map(this::createUserDTO).toList();
     }
 
     public UserDetailsDTO getUserDetails(Long id) {
@@ -130,5 +109,14 @@ public class UserService {
             return dto;
         }
 
+    }
+
+    private UserDTO createUserDTO (User user) {
+        UserDTO dto = new UserDTO();
+        dto.setId(user.getId());
+        dto.setFirstName(user.getFirstName());
+        dto.setLastName(user.getLastName());
+        dto.setRole(user.getRole());
+        return dto;
     }
 }

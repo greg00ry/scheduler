@@ -4,14 +4,13 @@ import com.scheduler.scheduler.dto.CreateUserDTO;
 import com.scheduler.scheduler.dto.UserDTO;
 import com.scheduler.scheduler.dto.UserDetailsDTO;
 import com.scheduler.scheduler.model.Role;
-import com.scheduler.scheduler.model.User;
 import com.scheduler.scheduler.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/user")
