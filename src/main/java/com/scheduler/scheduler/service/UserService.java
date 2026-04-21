@@ -1,9 +1,6 @@
 package com.scheduler.scheduler.service;
 
-import com.scheduler.scheduler.dto.AbsenceDTO;
-import com.scheduler.scheduler.dto.ShiftDTO;
-import com.scheduler.scheduler.dto.UserDetailsDTO;
-import com.scheduler.scheduler.dto.WorkingHoursDTO;
+import com.scheduler.scheduler.dto.*;
 import com.scheduler.scheduler.model.User;
 import com.scheduler.scheduler.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -15,6 +12,20 @@ public class UserService {
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    public UserDTO getUser(Long id) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        UserDTO dto = new UserDTO();
+        dto.setId(user.getId());
+        dto.setFirstName(user.getFirstName());
+        dto.setLastName(user.getLastName());
+        dto.setRole(user.getRole());
+
+        return dto;
     }
 
     public UserDetailsDTO getUserDetails(Long id) {
