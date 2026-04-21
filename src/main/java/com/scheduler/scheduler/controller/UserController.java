@@ -8,6 +8,7 @@ import com.scheduler.scheduler.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,14 +22,14 @@ public class UserController {
         this.userService = userService;
     }
 
-    GetMapping
+    @GetMapping
     public UserDTO getUser(Long id) {
         return userService.getUser(id);
     }
 
     @GetMapping("/all")
-    public List<User> getAll() {
-        return userService.findAll();
+    public List<UserDTO> getAll() {
+        return userService.getAllUser();
     }
 
     @GetMapping("/details")
@@ -36,23 +37,15 @@ public class UserController {
         return userService.getUserDetails(id);
     }
 
-    @GetMapping("/by-email")
-    public Optional<User> findByEmail(@RequestParam String email) {
-        return userService.findByEmail(email);
-    }
 
-    @GetMapping("/get-all-asc")
-    public List<User> findAllByOrder() {
-        return userService.findAllByOrderByLastNameAsc();
-    }
 
     @GetMapping("/available")
-    public List<User> getAvailableByDate(@RequestParam LocalDate date) {
+    public List<UserDTO> getAvailableByDate(@RequestParam LocalDateTime date) {
         return userService.findAvailableUsersByDate(date);
     }
 
     @GetMapping("/by-role")
-    public List<User> findByRole(@RequestParam Role role) {
+    public List<UserDTO> findByRole(@RequestParam Role role) {
         return userService.findByRole(role);
     }
 
