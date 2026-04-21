@@ -3,7 +3,7 @@ package com.scheduler.scheduler.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import javax.management.relation.Role;
+
 import java.util.List;
 
 @Data
@@ -26,6 +26,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Availability> availabilityList;
 
+    @Enumerated(EnumType.STRING)
     private Role role;
 
 
