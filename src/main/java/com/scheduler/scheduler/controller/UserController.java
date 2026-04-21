@@ -1,5 +1,6 @@
 package com.scheduler.scheduler.controller;
 
+import com.scheduler.scheduler.dto.CreateUserDTO;
 import com.scheduler.scheduler.dto.UserDTO;
 import com.scheduler.scheduler.dto.UserDetailsDTO;
 import com.scheduler.scheduler.model.Role;
@@ -50,7 +51,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User create(@RequestBody User employee) {
-        return userService.save(employee);
+    public UserDTO create(@RequestBody CreateUserDTO employee) {
+        return userService.createUser(employee);
     }
 }

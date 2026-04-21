@@ -1,6 +1,7 @@
 package com.scheduler.scheduler.service;
 
 import com.scheduler.scheduler.dto.*;
+import com.scheduler.scheduler.exception.ExistingUserException;
 import com.scheduler.scheduler.model.Role;
 import com.scheduler.scheduler.model.User;
 import com.scheduler.scheduler.repository.UserRepository;
@@ -105,5 +106,29 @@ public class UserService {
                 }).toList());
 
         return dto;
+    }
+
+    public UserDTO createUser(CreateUserDTO createUserDTO) throws ExistingUserException {
+
+        if (userRepository.existsByEmail(createUserDTO.getEmail())) {
+            throw new ExistingUserException("User email exists");
+        } else {
+            User user = new User();
+            user.setFirstName(createUserDTO.getFirstName());
+            user.setLastName(createUserDTO.getLastName());
+            user.setEmail(createUserDTO.getEmail());
+            user.setRole(createUserDTO.getRole());
+
+            User saved = userRepository.save(user);
+
+            UserDTO dto = new UserDTO();
+            dto.setId(saved.getId());
+            dto.setFirstName(saved.getFirstName());
+            dto.setLastName(saved.getLastName());
+            dto.setRole(saved.getRole());
+
+            return dto;
+        }
+
     }
 }
