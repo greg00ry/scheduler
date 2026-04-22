@@ -26,4 +26,7 @@ public class Shift {
     private LocalDateTime endTime;
 
     private String status;
+
+    private boolean isValid;
+    private String validationMessage;
 }

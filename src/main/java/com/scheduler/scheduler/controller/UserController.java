@@ -54,3 +54,8 @@ public class UserController {
         return userService.createUser(employee);
     }
 }
+
+//TODO: test added endpoints in postman,
+//TODO: Added Controller for Schedule
+//TODO: User And Schedule are just one and only services
+//TODO: All other methods should be in Schedule service

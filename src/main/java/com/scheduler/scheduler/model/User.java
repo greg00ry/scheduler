@@ -18,6 +18,7 @@ public class User {
     private String lastName;
     private String email;
 
+
     @OneToMany(mappedBy = "user")
     private List<WorkingHours> workingHoursList;
 
