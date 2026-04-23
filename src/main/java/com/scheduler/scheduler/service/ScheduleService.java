@@ -1,13 +1,12 @@
 package com.scheduler.scheduler.service;
 
 import com.scheduler.scheduler.dto.ScheduleDTO;
-import com.scheduler.scheduler.dto.UserDTO;
 import com.scheduler.scheduler.model.Schedule;
 import com.scheduler.scheduler.repository.ScheduleRepository;
 
-import com.scheduler.scheduler.repository.UserRepository;
-import org.springframework.boot.webmvc.autoconfigure.WebMvcProperties;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ScheduleService {
@@ -23,6 +22,15 @@ public class ScheduleService {
                 .orElseThrow(() -> new RuntimeException("Schedule not found"));
         return createScheduleDTO((schedule));
     }
+
+    //TODO: Add endpoitn in controller
+    //TODO: Check for unused classes
+    public List<ScheduleDTO> getAllSchedules() {
+        return scheduleRepository.findAll().stream()
+                .map(this::createScheduleDTO).toList();
+    }
+
+
 
 
 
