@@ -21,6 +21,13 @@ public class ScheduleService {
     public ScheduleDTO getSchedule(Long id) {
         Schedule schedule = scheduleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Schedule not found"));
+        return createScheduleDTO((schedule));
+    }
+
+
+
+
+    private ScheduleDTO createScheduleDTO (Schedule schedule) {
         ScheduleDTO dto = new ScheduleDTO();
         dto.setId(schedule.getId());
         dto.setWeekStart(schedule.getWeekStart());
