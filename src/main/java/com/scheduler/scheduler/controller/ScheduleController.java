@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/schedule")
 public class ScheduleController {
@@ -22,5 +24,10 @@ public class ScheduleController {
     public ScheduleDTO getSchedule(Long id) {
         return scheduleService.getSchedule(id);
     }
+
+    public List<ScheduleDTO> getAllSchedules() {
+        return scheduleService.getAllSchedules();
+    }
+
 
 }
