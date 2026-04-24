@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+//TODO: endpoints for getUsersByAbsence and ByWorkingHours and ByAvailability
+
 @RestController
 @RequestMapping("/api/schedule")
 public class ScheduleController {
@@ -42,6 +44,11 @@ public class ScheduleController {
     @GetMapping("/shift/all")
     public List<ShiftDTO> getAllShifts() {
         return shiftService.getAllShifts();
+    }
+
+    @GetMapping("/{id}/shifts")
+    public List<ShiftDTO> getShiftsBySchedule(Long id) {
+        return shiftService.getShiftsByScheduleId(id);
     }
 
 

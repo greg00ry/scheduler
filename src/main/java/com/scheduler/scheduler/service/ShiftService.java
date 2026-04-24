@@ -40,6 +40,11 @@ public class ShiftService {
                 .map(this::createShiftDTO).toList();
     }
 
+    public List<ShiftDTO> getShiftsByScheduleId(Long id) {
+        return shiftRepository.getShiftsBySchedule_Id(id).stream()
+                .map(this::createShiftDTO).toList();
+    }
+
     public ShiftDTO createShift (CreateShiftDTO createShiftDTO) {
         Shift shift = new Shift();
         shift.setUser(userRepository.findById(createShiftDTO.getUserId())
@@ -50,7 +55,9 @@ public class ShiftService {
         shift.setStartTime(createShiftDTO.getStartTime());
         shift.setEndTime((createShiftDTO.getEndTime()));
 
-        return createShiftDTO(shift);
+        Shift saved = shiftRepository.save(shift);
+
+        return createShiftDTO(saved);
 
     }
 
