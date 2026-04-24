@@ -10,6 +10,8 @@ public class ShiftDTO {
     @NotNull
     private Long id;
     @NotNull
+    private UserDTO userDTO;
+    @NotNull
     private LocalDateTime date;
     @NotNull
     private LocalDateTime startTime;
