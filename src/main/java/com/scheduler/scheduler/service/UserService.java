@@ -100,13 +100,7 @@ public class UserService {
 
             User saved = userRepository.save(user);
 
-            UserDTO dto = new UserDTO();
-            dto.setId(saved.getId());
-            dto.setFirstName(saved.getFirstName());
-            dto.setLastName(saved.getLastName());
-            dto.setRole(saved.getRole());
-
-            return dto;
+            return createUserDTO(user);
         }
 
     }
