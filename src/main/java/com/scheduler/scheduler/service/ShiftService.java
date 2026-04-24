@@ -8,6 +8,7 @@ import com.scheduler.scheduler.model.User;
 import com.scheduler.scheduler.repository.ShiftRepository;
 import com.scheduler.scheduler.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -32,6 +33,9 @@ public class ShiftService {
         return shiftRepository.findAll().stream()
                 .map(this::createShiftDTO).toList();
     }
+
+    @Transactional
+
 
     private ShiftDTO createShiftDTO (Shift shift) {
         ShiftDTO dto = new ShiftDTO();

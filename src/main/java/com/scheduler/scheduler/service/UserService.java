@@ -6,6 +6,7 @@ import com.scheduler.scheduler.model.Role;
 import com.scheduler.scheduler.model.User;
 import com.scheduler.scheduler.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -47,7 +48,6 @@ public class UserService {
         return userRepository.findByRole(role).stream()
                 .map(this::createUserDTO).toList();
     }
-
     public UserDetailsDTO getUserDetails(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -86,7 +86,7 @@ public class UserService {
 
         return dto;
     }
-
+    @Transactional
     public UserDTO createUser(CreateUserDTO createUserDTO) throws ExistingUserException {
 
         if (userRepository.existsByEmail(createUserDTO.getEmail())) {
