@@ -40,7 +40,6 @@ public class ShiftService {
                 .map(this::createShiftDTO).toList();
     }
 
-    @Transactional
     public ShiftDTO createShift (CreateShiftDTO createShiftDTO) {
         Shift shift = new Shift();
         shift.setUser(userRepository.findById(createShiftDTO.getUserId())
