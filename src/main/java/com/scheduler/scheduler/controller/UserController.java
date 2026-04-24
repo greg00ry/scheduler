@@ -55,7 +55,4 @@ public class UserController {
     }
 }
 
-//TODO: test added endpoints in postman,
-//TODO: Added Controller for Schedule
-//TODO: User And Schedule are just one and only services
-//TODO: All other methods should be in Schedule service
+//TODO: test added endpoints in postman

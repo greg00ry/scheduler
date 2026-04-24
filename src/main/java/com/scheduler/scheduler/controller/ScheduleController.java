@@ -2,14 +2,15 @@ package com.scheduler.scheduler.controller;
 
 
 
+import com.scheduler.scheduler.dto.CreateScheduleDTO;
+import com.scheduler.scheduler.dto.CreateUserDTO;
 import com.scheduler.scheduler.dto.ScheduleDTO;
 import com.scheduler.scheduler.dto.ShiftDTO;
 import com.scheduler.scheduler.service.ScheduleService;
 
 import com.scheduler.scheduler.service.ShiftService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.scheduler.scheduler.service.UserService;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,14 +21,16 @@ import java.util.List;
 public class ScheduleController {
     private final ScheduleService scheduleService;
     private final ShiftService shiftService;
+    private final UserService userService;
 
-    public ScheduleController(ScheduleService scheduleService, ShiftService shiftService) {
+    public ScheduleController(ScheduleService scheduleService, ShiftService shiftService, UserService userService) {
         this.scheduleService = scheduleService;
         this.shiftService = shiftService;
+        this.userService = userService;
     }
 
     @GetMapping("/{id}")
-    public ScheduleDTO getSchedule(Long id) {
+    public ScheduleDTO getSchedule(@PathVariable Long id) {
         return scheduleService.getSchedule(id);
     }
 
@@ -37,7 +40,7 @@ public class ScheduleController {
     }
 
     @GetMapping("/shift/{id}")
-    public ShiftDTO getShift(Long id) {
+    public ShiftDTO getShift(@PathVariable Long id) {
         return shiftService.getShift(id);
     }
 
@@ -47,8 +50,13 @@ public class ScheduleController {
     }
 
     @GetMapping("/{id}/shifts")
-    public List<ShiftDTO> getShiftsBySchedule(Long id) {
+    public List<ShiftDTO> getShiftsBySchedule(@PathVariable Long id) {
         return shiftService.getShiftsByScheduleId(id);
+    }
+
+    @PostMapping("/create")
+    public ScheduleDTO create(@RequestBody CreateScheduleDTO schedule) {
+        return scheduleService.createSchedule(schedule);
     }
 
 

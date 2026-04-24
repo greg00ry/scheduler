@@ -1,18 +1,20 @@
 package com.scheduler.scheduler.dto;
 
 import jakarta.validation.constraints.NotNull;
-import org.springframework.cglib.core.Local;
+import lombok.Data;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class createScheduleDTO {
+@Data
+public class CreateScheduleDTO  {
     @NotNull
     private LocalDateTime weekStart;
     @NotNull
     private LocalDateTime weekEnd;
     @NotNull
-    private Long userId;
+    private Long createdBy_id;
     @NotNull
-    private List<ShiftDTO> shifts;
+    private List<CreateShiftDTO> shifts;
 }
