@@ -20,11 +20,12 @@ public class ScheduleController {
         this.scheduleService = scheduleService;
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     public ScheduleDTO getSchedule(Long id) {
         return scheduleService.getSchedule(id);
     }
 
+    @GetMapping("/all")
     public List<ScheduleDTO> getAllSchedules() {
         return scheduleService.getAllSchedules();
     }

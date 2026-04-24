@@ -23,7 +23,6 @@ public class ScheduleService {
         return createScheduleDTO((schedule));
     }
 
-    //TODO: Add endpoitn in controller
     //TODO: Check for unused classes
     public List<ScheduleDTO> getAllSchedules() {
         return scheduleRepository.findAll().stream()
