@@ -9,6 +9,8 @@ import com.scheduler.scheduler.repository.ShiftRepository;
 import com.scheduler.scheduler.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ShiftService {
     private final ShiftRepository shiftRepository;
@@ -24,6 +26,11 @@ public class ShiftService {
                 .orElseThrow(() -> new RuntimeException("Shift not found"));
 
         return createShiftDTO(shift);
+    }
+
+    public List<ShiftDTO> getAllShifts () {
+        return shiftRepository.findAll().stream()
+                .map(this::createShiftDTO).toList();
     }
 
     private ShiftDTO createShiftDTO (Shift shift) {
