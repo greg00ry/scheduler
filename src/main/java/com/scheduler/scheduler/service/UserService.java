@@ -2,8 +2,10 @@ package com.scheduler.scheduler.service;
 
 import com.scheduler.scheduler.dto.*;
 import com.scheduler.scheduler.exception.ExistingUserException;
+import com.scheduler.scheduler.model.Absence;
 import com.scheduler.scheduler.model.Role;
 import com.scheduler.scheduler.model.User;
+import com.scheduler.scheduler.repository.AbsenceRepository;
 import com.scheduler.scheduler.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,9 +17,11 @@ import java.util.List;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final AbsenceRepository absenceRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, AbsenceRepository absenceRepository) {
         this.userRepository = userRepository;
+        this.absenceRepository = absenceRepository;
     }
 
     public UserDTO getUser(Long id) {
@@ -86,6 +90,9 @@ public class UserService {
 
         return dto;
     }
+
+
+
     @Transactional
     public UserDTO createUser(CreateUserDTO createUserDTO) throws ExistingUserException {
 

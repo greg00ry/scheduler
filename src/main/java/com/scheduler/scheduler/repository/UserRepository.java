@@ -1,5 +1,6 @@
 package com.scheduler.scheduler.repository;
 
+import com.scheduler.scheduler.model.Absence;
 import com.scheduler.scheduler.model.Role;
 import com.scheduler.scheduler.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,6 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT u FROM User u JOIN u.availabilityList a WHERE a.date = :date AND a.available = true")
     List<User> findAvailableUsersByDate(@Param("date") LocalDateTime date);
+
 
 
     boolean existsByEmail(String email);
