@@ -2,7 +2,6 @@ package com.scheduler.scheduler.service;
 
 import com.scheduler.scheduler.dto.*;
 import com.scheduler.scheduler.exception.ExistingUserException;
-import com.scheduler.scheduler.model.Absence;
 import com.scheduler.scheduler.model.Role;
 import com.scheduler.scheduler.model.User;
 import com.scheduler.scheduler.repository.AbsenceRepository;
@@ -17,11 +16,9 @@ import java.util.List;
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final AbsenceRepository absenceRepository;
 
-    public UserService(UserRepository userRepository, AbsenceRepository absenceRepository) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.absenceRepository = absenceRepository;
     }
 
     public UserDTO getUser(Long id) {
@@ -105,7 +102,7 @@ public class UserService {
             user.setEmail(createUserDTO.getEmail());
             user.setRole(createUserDTO.getRole());
 
-            User saved = userRepository.save(user);
+            userRepository.save(user);
 
             return createUserDTO(user);
         }

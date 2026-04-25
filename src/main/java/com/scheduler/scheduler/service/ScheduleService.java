@@ -48,9 +48,8 @@ public class ScheduleService {
         Schedule saved = scheduleRepository.save(schedule);
         List<CreateShiftDTO> shiftDTOS = createScheduleDTO.getShifts();
 
-        List< ShiftDTO> dtos = shiftDTOS.stream()
-                .map(shiftService::createShift)
-                .toList();
+        shiftDTOS.stream()
+                .map(shiftService::createShift);
 
         return createScheduleDTO(saved);
     }

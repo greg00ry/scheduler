@@ -1,6 +1,5 @@
 package com.scheduler.scheduler.repository;
 
-import com.scheduler.scheduler.model.Absence;
 import com.scheduler.scheduler.model.Role;
 import com.scheduler.scheduler.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 

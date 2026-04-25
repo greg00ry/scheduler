@@ -3,14 +3,11 @@ package com.scheduler.scheduler.service;
 
 import com.scheduler.scheduler.dto.CreateShiftDTO;
 import com.scheduler.scheduler.dto.ShiftDTO;
-import com.scheduler.scheduler.dto.UserDTO;
 import com.scheduler.scheduler.model.Shift;
-import com.scheduler.scheduler.model.User;
 import com.scheduler.scheduler.repository.ScheduleRepository;
 import com.scheduler.scheduler.repository.ShiftRepository;
 import com.scheduler.scheduler.repository.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
