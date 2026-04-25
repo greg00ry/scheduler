@@ -4,7 +4,6 @@ import com.scheduler.scheduler.dto.*;
 import com.scheduler.scheduler.exception.ExistingUserException;
 import com.scheduler.scheduler.model.Role;
 import com.scheduler.scheduler.model.User;
-import com.scheduler.scheduler.repository.AbsenceRepository;
 import com.scheduler.scheduler.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
