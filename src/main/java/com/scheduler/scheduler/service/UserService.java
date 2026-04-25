@@ -5,6 +5,7 @@ import com.scheduler.scheduler.exception.ExistingUserException;
 import com.scheduler.scheduler.model.Role;
 import com.scheduler.scheduler.model.User;
 import com.scheduler.scheduler.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,9 +16,11 @@ import java.util.List;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserDTO getUser(Long id) {
@@ -99,6 +102,7 @@ public class UserService {
             user.setFirstName(createUserDTO.getFirstName());
             user.setLastName(createUserDTO.getLastName());
             user.setEmail(createUserDTO.getEmail());
+            user.setPassword(passwordEncoder.encode(createUserDTO.getPassword()));
             user.setRole(createUserDTO.getRole());
 
             userRepository.save(user);
