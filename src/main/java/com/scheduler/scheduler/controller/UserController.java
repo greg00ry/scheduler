@@ -5,6 +5,7 @@ import com.scheduler.scheduler.dto.UserDTO;
 import com.scheduler.scheduler.dto.UserDetailsDTO;
 import com.scheduler.scheduler.model.Role;
 import com.scheduler.scheduler.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -50,9 +51,11 @@ public class UserController {
     }
 
     @PostMapping
-    public UserDTO create(@RequestBody CreateUserDTO employee) {
+    public UserDTO create(@RequestBody @Valid CreateUserDTO employee) {
         return userService.createUser(employee);
     }
 }
 
+//TODO: Endpoint for adding absences and availability
+//TODO: WorkingHours Service
 //TODO: test added endpoints in postman
