@@ -43,8 +43,4 @@ public class AbsenceService {
                 .orElseThrow(() -> new RuntimeException("Absence not found")));
         return ResponseEntity.noContent().build();
     }
-
-
-
-
 }

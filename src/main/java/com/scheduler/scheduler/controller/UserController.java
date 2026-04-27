@@ -62,6 +62,5 @@ public class UserController {
 //TODO: update user and schedule endpoint
 //TODO: delete user endpoint
 //TODO: delete schedule endpoint
-//TODO: add absence endpoint
 //TODO: add availability endpoint
 

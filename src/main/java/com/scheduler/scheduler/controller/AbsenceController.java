@@ -18,9 +18,8 @@ public class AbsenceController {
         return absenceService.createAbsence(createAbsenceDTO);
     }
 
-    @DeleteMapping("/${id}")
-    public ResponseEntity<Void> deleteAbsence (@RequestParam @Valid Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAbsence (@PathVariable @Valid Long id) {
         return absenceService.deleteAbsence(id);
     }
-
 }
