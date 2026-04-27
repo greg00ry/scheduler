@@ -22,6 +22,15 @@ public class AbsenceService {
 
     @Transactional
     public CreateAbsenceDTO createAbsence(CreateAbsenceDTO createAbsenceDTO) {
+
+        if (absenceRepository.existsByShiftAndUser(shiftRepository.findById(createAbsenceDTO.getShiftId())
+                .orElseThrow(),
+                userRepository.findById(createAbsenceDTO.getUserId())
+                        .orElseThrow())) {
+            throw new RuntimeException("Absence already exists");
+        }
+
+
         Absence absence = new Absence();
         absence.setUser(userRepository.findById(createAbsenceDTO.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found")));
@@ -41,4 +50,7 @@ public class AbsenceService {
                 .orElseThrow(() -> new RuntimeException("Absence not found")));
         return ResponseEntity.noContent().build();
     }
+
+
+
 }

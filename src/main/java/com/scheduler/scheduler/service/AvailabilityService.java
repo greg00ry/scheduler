@@ -20,6 +20,13 @@ public class AvailabilityService {
     }
     @Transactional
     public CreateAvailabilityDTO createAvailability (CreateAvailabilityDTO createAvailabilityDTO) {
+        if (availabilityRepository.existsByUserAndDate(
+                userRepository.findById(createAvailabilityDTO.getUserId())
+                        .orElseThrow(),
+                createAvailabilityDTO.getDate())) {
+            throw new RuntimeException("Availability already exists for this date");
+        }
+
         Availability availability = new Availability();
         availability.setUser(userRepository.findById(createAvailabilityDTO.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found")));
