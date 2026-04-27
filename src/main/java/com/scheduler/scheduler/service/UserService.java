@@ -5,6 +5,7 @@ import com.scheduler.scheduler.exception.ExistingUserException;
 import com.scheduler.scheduler.model.Role;
 import com.scheduler.scheduler.model.User;
 import com.scheduler.scheduler.repository.UserRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -112,6 +113,25 @@ public class UserService {
 
     }
 
+    @Transactional
+    public UserDTO updateUser(UpdateUserDTO updateUserDTO) {
+        User user = userRepository.findById(updateUserDTO.getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.setFirstName(updateUserDTO.getFirstName());
+        user.setLastName(updateUserDTO.getLastName());
+        user.setEmail(updateUserDTO.getEmail());
+        user.setPassword(passwordEncoder.encode(updateUserDTO.getPassword()));
+        User saved = userRepository.save(user);
+        return createUserDTO(saved);
+    }
+
+    @Transactional
+    public ResponseEntity<Void> deleteUser(Long id) {
+        userRepository.delete(userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Absence not found")));
+        return ResponseEntity.noContent().build();
+    }
+
     private UserDTO createUserDTO (User user) {
         UserDTO dto = new UserDTO();
         dto.setId(user.getId());
@@ -120,4 +140,5 @@ public class UserService {
         dto.setRole(user.getRole());
         return dto;
     }
+
 }

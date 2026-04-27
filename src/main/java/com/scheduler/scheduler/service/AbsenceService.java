@@ -1,8 +1,6 @@
 package com.scheduler.scheduler.service;
 
-import com.scheduler.scheduler.dto.AbsenceDTO;
 import com.scheduler.scheduler.dto.CreateAbsenceDTO;
-import com.scheduler.scheduler.dto.CreateScheduleDTO;
 import com.scheduler.scheduler.model.Absence;
 import com.scheduler.scheduler.repository.AbsenceRepository;
 import com.scheduler.scheduler.repository.ShiftRepository;

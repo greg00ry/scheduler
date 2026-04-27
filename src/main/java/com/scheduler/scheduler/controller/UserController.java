@@ -1,11 +1,13 @@
 package com.scheduler.scheduler.controller;
 
 import com.scheduler.scheduler.dto.CreateUserDTO;
+import com.scheduler.scheduler.dto.UpdateUserDTO;
 import com.scheduler.scheduler.dto.UserDTO;
 import com.scheduler.scheduler.dto.UserDetailsDTO;
 import com.scheduler.scheduler.model.Role;
 import com.scheduler.scheduler.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -34,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping("/details")
-    public UserDetailsDTO getUserDetails(@RequestParam Long id) {
+    public UserDetailsDTO getUserDetails(@PathVariable Long id) {
         return userService.getUserDetails(id);
     }
 
@@ -54,13 +56,20 @@ public class UserController {
     public UserDTO create(@RequestBody @Valid CreateUserDTO employee) {
         return userService.createUser(employee);
     }
+
+    @PutMapping("/update")
+    public UserDTO update(@RequestBody @Valid UpdateUserDTO updateUserDTO) {
+        return userService.updateUser(updateUserDTO);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser (@PathVariable Long id) {
+        return userService.deleteUser(id);
+    }
 }
 
 //TODO: test added endpoints in postman
-//TODO: WorkingHours Service
-//TODO: update user and schedule endpoint
+//TODO: schedule endpoint
 //TODO: delete user endpoint
 //TODO: delete schedule endpoint
 //TODO: add validation for creating absence and availability that checks if user has existing them on that shift
-//TODO: add requiredtargethours in schedule creation
 

@@ -4,7 +4,6 @@ import com.scheduler.scheduler.dto.CreateScheduleDTO;
 import com.scheduler.scheduler.dto.CreateShiftDTO;
 import com.scheduler.scheduler.dto.ScheduleDTO;
 import com.scheduler.scheduler.model.Schedule;
-import com.scheduler.scheduler.model.Shift;
 import com.scheduler.scheduler.model.WorkingHours;
 import com.scheduler.scheduler.repository.ScheduleRepository;
 
