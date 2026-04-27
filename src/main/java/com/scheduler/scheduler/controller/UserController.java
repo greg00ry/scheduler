@@ -68,5 +68,4 @@ public class UserController {
 }
 
 //TODO: test added endpoints in postman
-//TODO: add validation for creating absence and availability that checks if user has existing them on that shift
 

@@ -1,7 +1,6 @@
 package com.scheduler.scheduler.repository;
 
 import com.scheduler.scheduler.model.Availability;
-import com.scheduler.scheduler.model.Shift;
 import com.scheduler.scheduler.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
