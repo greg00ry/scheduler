@@ -57,11 +57,10 @@ public class UserController {
 }
 
 //TODO: test added endpoints in postman
-//TODO: Endpoint for adding availability
 //TODO: WorkingHours Service
 //TODO: update user and schedule endpoint
 //TODO: delete user endpoint
 //TODO: delete schedule endpoint
-//TODO: add availability endpoint
-//TODO: add validation for creating absence and availability tah checks if user has existing it on that shift
+//TODO: add validation for creating absence and availability that checks if user has existing them on that shift
+//TODO: add requiredtargethours in schedule creation
 

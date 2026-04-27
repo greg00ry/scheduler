@@ -17,8 +17,11 @@ public class WorkingHours {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private LocalDateTime periodStart;
-    private LocalDateTime periodEnd;
+    @ManyToOne
+    @JoinColumn(name = "schedule_id")
+    private Schedule schedule;
+
+
 
     private float totalHours;
     private float overtimeHours;

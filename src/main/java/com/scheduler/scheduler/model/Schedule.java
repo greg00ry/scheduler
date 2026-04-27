@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -14,6 +15,14 @@ public class Schedule {
 
     private LocalDateTime weekStart;
     private LocalDateTime weekEnd;
+
+    @OneToMany(mappedBy = "schedule")
+    private List<Shift> shiftList;
+
+    @OneToMany(mappedBy = "schedule")
+    private List<Shift> workingHours;
+
+    private float workingHoursTarget;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
