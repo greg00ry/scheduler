@@ -57,7 +57,7 @@ public class UserController {
 }
 
 //TODO: test added endpoints in postman
-//TODO: Endpoint for adding absences and availability
+//TODO: Endpoint for adding availability
 //TODO: WorkingHours Service
 //TODO: update user and schedule endpoint
 //TODO: delete user endpoint

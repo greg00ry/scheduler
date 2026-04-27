@@ -2,9 +2,9 @@ package com.scheduler.scheduler.controller;
 
 import com.scheduler.scheduler.dto.CreateAbsenceDTO;
 import com.scheduler.scheduler.service.AbsenceService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/absence")
@@ -14,9 +14,13 @@ public class AbsenceController {
         this.absenceService = absenceService;
     }
     @GetMapping()
-    public CreateAbsenceDTO createAbsence (CreateAbsenceDTO createAbsenceDTO) {
+    public CreateAbsenceDTO createAbsence (@RequestBody @Valid CreateAbsenceDTO createAbsenceDTO) {
         return absenceService.createAbsence(createAbsenceDTO);
     }
 
+    @DeleteMapping("/${id}")
+    public ResponseEntity<Void> deleteAbsence (@RequestParam @Valid Long id) {
+        return absenceService.deleteAbsence(id);
+    }
 
 }

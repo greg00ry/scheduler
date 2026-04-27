@@ -8,6 +8,7 @@ import com.scheduler.scheduler.repository.AbsenceRepository;
 import com.scheduler.scheduler.repository.ShiftRepository;
 import com.scheduler.scheduler.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,6 +36,15 @@ public class AbsenceService {
 
         return createAbsenceDTO;
     }
+
+    @Transactional
+    public ResponseEntity<Void> deleteAbsence(Long id) {
+        absenceRepository.delete(absenceRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Absence not found")));
+        return ResponseEntity.noContent().build();
+    }
+
+
 
 
 }
