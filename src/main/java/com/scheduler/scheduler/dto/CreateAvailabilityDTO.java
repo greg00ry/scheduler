@@ -14,5 +14,4 @@ public class CreateAvailabilityDTO {
     private LocalDateTime date;
     @NotNull
     private boolean available;
-
 }

@@ -23,8 +23,8 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
-    public UserDTO getUser(@RequestParam Long id) {
+    @GetMapping("/{id}")
+    public UserDTO getUser(@PathVariable Long id) {
         return userService.getUser(id);
     }
 

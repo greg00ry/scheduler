@@ -2,7 +2,6 @@ package com.scheduler.scheduler.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 

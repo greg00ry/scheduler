@@ -5,6 +5,7 @@ import com.scheduler.scheduler.dto.CreateAvailabilityDTO;
 import com.scheduler.scheduler.model.Availability;
 import com.scheduler.scheduler.repository.AvailabilityRepository;
 import com.scheduler.scheduler.repository.UserRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +29,13 @@ public class AvailabilityService {
         Availability saved = availabilityRepository.save(availability);
 
         return createAvailabilityDTO;
+    }
+
+    @Transactional
+    public ResponseEntity<Void> deleteAvailability(Long id) {
+        availabilityRepository.delete(availabilityRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Availability not found")));
+        return ResponseEntity.noContent().build();
     }
 
 }
