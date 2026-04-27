@@ -63,4 +63,5 @@ public class UserController {
 //TODO: delete user endpoint
 //TODO: delete schedule endpoint
 //TODO: add availability endpoint
+//TODO: add validation for creating absence and availability tah checks if user has existing it on that shift
 
