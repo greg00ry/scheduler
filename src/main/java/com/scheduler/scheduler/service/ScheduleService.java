@@ -53,14 +53,6 @@ public class ScheduleService {
         return createScheduleDTO(saved);
     }
 
-
-
-
-
-
-
-
-
     private ScheduleDTO createScheduleDTO (Schedule schedule) {
         ScheduleDTO dto = new ScheduleDTO();
         dto.setId(schedule.getId());

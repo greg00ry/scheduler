@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @GetMapping
-    public UserDTO getUser(Long id) {
+    public UserDTO getUser(@RequestParam Long id) {
         return userService.getUser(id);
     }
 
@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @GetMapping("/details")
-    public UserDetailsDTO getUserDetails(Long id) {
+    public UserDetailsDTO getUserDetails(@RequestParam Long id) {
         return userService.getUserDetails(id);
     }
 
@@ -56,6 +56,12 @@ public class UserController {
     }
 }
 
+//TODO: test added endpoints in postman
 //TODO: Endpoint for adding absences and availability
 //TODO: WorkingHours Service
-//TODO: test added endpoints in postman
+//TODO: update user and schedule endpoint
+//TODO: delete user endpoint
+//TODO: delete schedule endpoint
+//TODO: add absence endpoint
+//TODO: add availability endpoint
+
