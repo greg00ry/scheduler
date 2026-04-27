@@ -4,9 +4,12 @@ import com.scheduler.scheduler.dto.CreateScheduleDTO;
 import com.scheduler.scheduler.dto.CreateShiftDTO;
 import com.scheduler.scheduler.dto.ScheduleDTO;
 import com.scheduler.scheduler.model.Schedule;
+import com.scheduler.scheduler.model.Shift;
+import com.scheduler.scheduler.model.WorkingHours;
 import com.scheduler.scheduler.repository.ScheduleRepository;
 
 import com.scheduler.scheduler.repository.UserRepository;
+import com.scheduler.scheduler.repository.WorkingHoursRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,12 +21,14 @@ public class ScheduleService {
     private final UserService userService;
     private final UserRepository userRepository;
     private final ShiftService shiftService;
+    private final WorkingHoursRepository workingHoursRepository;
 
-    public ScheduleService(ScheduleRepository scheduleRepository, UserService userService, UserRepository userRepository, ShiftService shiftService) {
+    public ScheduleService(ScheduleRepository scheduleRepository, UserService userService, UserRepository userRepository, ShiftService shiftService, WorkingHoursRepository workingHoursRepository) {
         this.scheduleRepository = scheduleRepository;
         this.userService = userService;
         this.userRepository = userRepository;
         this.shiftService = shiftService;
+        this.workingHoursRepository = workingHoursRepository;
     }
 
     public ScheduleDTO getSchedule(Long id) {
@@ -47,8 +52,23 @@ public class ScheduleService {
         Schedule saved = scheduleRepository.save(schedule);
         List<CreateShiftDTO> shiftDTOS = createScheduleDTO.getShifts();
 
+        shiftDTOS.forEach(s -> s.setScheduleId(saved.getId()));
+
         shiftDTOS.stream()
-                .map(shiftService::createShift);
+                .map(shiftService::createShift)
+                .toList();
+
+        shiftDTOS.stream()
+                .map(CreateShiftDTO::getUserId)
+                .distinct()
+                .forEach(u -> {
+                    WorkingHours wh = new WorkingHours();
+                    wh.setUser(userRepository.findById(u).orElseThrow());
+                    wh.setSchedule(saved);
+                    wh.setTotalHours(0);
+                    wh.setOvertimeHours(0);
+                    workingHoursRepository.save(wh);
+                });
 
         return createScheduleDTO(saved);
     }

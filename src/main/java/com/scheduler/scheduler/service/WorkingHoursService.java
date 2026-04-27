@@ -16,6 +16,8 @@ public class WorkingHoursService {
         this.workingHoursRepository = workingHoursRepository;
     }
 
+
+
     public void calculateHours (User user, Shift shift) {
         WorkingHours workingHours = workingHoursRepository.getByUser_Id(user.getId());
 
