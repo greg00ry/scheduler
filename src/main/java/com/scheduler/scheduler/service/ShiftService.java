@@ -17,12 +17,14 @@ public class ShiftService {
     private final UserService userService;
     private final UserRepository userRepository;
     private final ScheduleRepository scheduleRepository;
+    private final WorkingHoursService workingHoursService;
 
-    public ShiftService(ShiftRepository shiftRepository, UserService userService, UserRepository userRepository, ScheduleRepository scheduleRepository) {
+    public ShiftService(ShiftRepository shiftRepository, UserService userService, UserRepository userRepository, ScheduleRepository scheduleRepository, WorkingHoursService workingHoursService) {
         this.shiftRepository = shiftRepository;
         this.userService = userService;
         this.userRepository = userRepository;
         this.scheduleRepository = scheduleRepository;
+        this.workingHoursService = workingHoursService;
     }
 
     public ShiftDTO getShift(Long id) {
@@ -53,6 +55,10 @@ public class ShiftService {
         shift.setEndTime((createShiftDTO.getEndTime()));
 
         Shift saved = shiftRepository.save(shift);
+
+        workingHoursService.calculateHours(shift.getUser(), shift);
+
+        workingHoursService.calculateOvertime(shift.getSchedule(), shift.getUser());
 
         return createShiftDTO(saved);
 

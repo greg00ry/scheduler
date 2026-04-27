@@ -29,7 +29,7 @@ public class WorkingHoursService {
     public void calculateOvertime(Schedule schedule, User user) {
         WorkingHours workingHours = workingHoursRepository.getByUser_Id(user.getId());
 
-        workingHours.setOvertimeHours(workingHours.getOvertimeHours() - schedule.getWorkingHoursTarget());
+        workingHours.setOvertimeHours(workingHours.getTotalHours() - schedule.getWorkingHoursTarget());
 
         workingHoursRepository.save(workingHours);
 
