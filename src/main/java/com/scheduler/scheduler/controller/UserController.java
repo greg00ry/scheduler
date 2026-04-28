@@ -68,4 +68,5 @@ public class UserController {
 }
 
 //TODO: test added endpoints in postman
+//TODO: Global Exception Handler
 
