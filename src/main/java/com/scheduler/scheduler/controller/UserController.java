@@ -67,6 +67,18 @@ public class UserController {
     }
 }
 
-//TODO: test added endpoints in postman
+//TODO: Postman tests
 //TODO: Global Exception Handler
-
+//TODO: Unit test
+//TODO: NGINX
+//TODO: Permissions
+//TODO: Postgres
+//TODO: Ingest admin user
+//TODO: Docker-compose
+//TODO: health endpoint
+//TODO: restart policy
+//TODO: logs
+//TODO: env variables
+//TODO: add company model for scalability
+//TODO: update readme
+//TODO: github actions

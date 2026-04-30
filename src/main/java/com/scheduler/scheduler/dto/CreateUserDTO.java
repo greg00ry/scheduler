@@ -3,6 +3,7 @@ package com.scheduler.scheduler.dto;
 import com.scheduler.scheduler.model.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -14,7 +15,7 @@ public class CreateUserDTO {
     @NotBlank
     @Email
     private String email;
-    @NotBlank
+    @NotNull
     private Role role;
     @NotBlank
     private String password;
