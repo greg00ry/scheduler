@@ -75,7 +75,6 @@ public class UserController {
 //TODO: Postgres
 //TODO: Ingest admin user
 //TODO: Docker-compose
-//TODO: health endpoint
 //TODO: restart policy
 //TODO: logs
 //TODO: env variables
