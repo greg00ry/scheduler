@@ -7,11 +7,13 @@ import com.scheduler.scheduler.model.Shift;
 import com.scheduler.scheduler.repository.ScheduleRepository;
 import com.scheduler.scheduler.repository.ShiftRepository;
 import com.scheduler.scheduler.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ShiftService {
     private final ShiftRepository shiftRepository;
     private final UserService userService;
@@ -19,13 +21,7 @@ public class ShiftService {
     private final ScheduleRepository scheduleRepository;
     private final WorkingHoursService workingHoursService;
 
-    public ShiftService(ShiftRepository shiftRepository, UserService userService, UserRepository userRepository, ScheduleRepository scheduleRepository, WorkingHoursService workingHoursService) {
-        this.shiftRepository = shiftRepository;
-        this.userService = userService;
-        this.userRepository = userRepository;
-        this.scheduleRepository = scheduleRepository;
-        this.workingHoursService = workingHoursService;
-    }
+
 
     public ShiftDTO getShift(Long id) {
         Shift shift = shiftRepository.findById(id)

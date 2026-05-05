@@ -5,16 +5,16 @@ import com.scheduler.scheduler.model.Shift;
 import com.scheduler.scheduler.model.User;
 import com.scheduler.scheduler.model.WorkingHours;
 import com.scheduler.scheduler.repository.WorkingHoursRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 
 @Service
+@RequiredArgsConstructor
 public class WorkingHoursService {
     private final WorkingHoursRepository workingHoursRepository;
-    public WorkingHoursService (WorkingHoursRepository workingHoursRepository) {
-        this.workingHoursRepository = workingHoursRepository;
-    }
+
 
 
 

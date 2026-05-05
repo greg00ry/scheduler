@@ -9,12 +9,14 @@ import com.scheduler.scheduler.repository.ScheduleRepository;
 
 import com.scheduler.scheduler.repository.UserRepository;
 import com.scheduler.scheduler.repository.WorkingHoursRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final UserService userService;
@@ -22,13 +24,7 @@ public class ScheduleService {
     private final ShiftService shiftService;
     private final WorkingHoursRepository workingHoursRepository;
 
-    public ScheduleService(ScheduleRepository scheduleRepository, UserService userService, UserRepository userRepository, ShiftService shiftService, WorkingHoursRepository workingHoursRepository) {
-        this.scheduleRepository = scheduleRepository;
-        this.userService = userService;
-        this.userRepository = userRepository;
-        this.shiftService = shiftService;
-        this.workingHoursRepository = workingHoursRepository;
-    }
+
 
     public ScheduleDTO getSchedule(Long id) {
         Schedule schedule = scheduleRepository.findById(id)

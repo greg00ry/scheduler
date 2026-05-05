@@ -8,6 +8,7 @@ import com.scheduler.scheduler.dto.ShiftDTO;
 import com.scheduler.scheduler.service.ScheduleService;
 
 import com.scheduler.scheduler.service.ShiftService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,14 +16,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/schedule")
+@RequiredArgsConstructor
 public class ScheduleController {
     private final ScheduleService scheduleService;
     private final ShiftService shiftService;
 
-    public ScheduleController(ScheduleService scheduleService, ShiftService shiftService) {
-        this.scheduleService = scheduleService;
-        this.shiftService = shiftService;
-    }
+
 
     @GetMapping("/{id}")
     public ScheduleDTO getSchedule(@PathVariable Long id) {

@@ -6,19 +6,17 @@ import com.scheduler.scheduler.repository.AbsenceRepository;
 import com.scheduler.scheduler.repository.ShiftRepository;
 import com.scheduler.scheduler.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AbsenceService {
     private final AbsenceRepository absenceRepository;
     private final UserRepository userRepository;
     private final ShiftRepository shiftRepository;
-    public AbsenceService (AbsenceRepository absenceRepository, UserRepository userRepository, ShiftRepository shiftRepository) {
-        this.absenceRepository = absenceRepository;
-        this.userRepository = userRepository;
-        this.shiftRepository = shiftRepository;
-    }
+
 
     @Transactional
     public CreateAbsenceDTO createAbsence(CreateAbsenceDTO createAbsenceDTO) {

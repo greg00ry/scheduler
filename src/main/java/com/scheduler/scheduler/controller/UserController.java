@@ -7,6 +7,7 @@ import com.scheduler.scheduler.dto.UserDetailsDTO;
 import com.scheduler.scheduler.model.Role;
 import com.scheduler.scheduler.service.UserService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,13 +18,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+
 
     @GetMapping("/{id}")
     public UserDTO getUser(@PathVariable Long id) {
@@ -66,7 +66,7 @@ public class UserController {
         return userService.deleteUser(id);
     }
 }
-
+//TODO: Refactor with @autowired
 //TODO: Postman tests
 //TODO: Global Exception Handler
 //TODO: Unit test

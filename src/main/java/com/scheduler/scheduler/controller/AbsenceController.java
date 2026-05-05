@@ -3,16 +3,16 @@ package com.scheduler.scheduler.controller;
 import com.scheduler.scheduler.dto.CreateAbsenceDTO;
 import com.scheduler.scheduler.service.AbsenceService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/absence")
+@RequiredArgsConstructor
 public class AbsenceController {
     private final AbsenceService absenceService;
-    public AbsenceController (AbsenceService absenceService) {
-        this.absenceService = absenceService;
-    }
+
     @PostMapping()
     public CreateAbsenceDTO createAbsence (@RequestBody @Valid CreateAbsenceDTO createAbsenceDTO) {
         return absenceService.createAbsence(createAbsenceDTO);

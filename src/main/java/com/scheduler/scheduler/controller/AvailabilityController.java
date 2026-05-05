@@ -3,16 +3,16 @@ package com.scheduler.scheduler.controller;
 import com.scheduler.scheduler.dto.CreateAvailabilityDTO;
 import com.scheduler.scheduler.service.AvailabilityService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/availability")
+@RequiredArgsConstructor
 public class AvailabilityController {
     private final AvailabilityService availabilityService;
-    public AvailabilityController (AvailabilityService availabilityService) {
-        this.availabilityService = availabilityService;
-    }
+
     @PostMapping()
     public CreateAvailabilityDTO createAvailability (@RequestBody @Valid CreateAvailabilityDTO createAvailabilityDTO) {
         return availabilityService.createAvailability(createAvailabilityDTO);
