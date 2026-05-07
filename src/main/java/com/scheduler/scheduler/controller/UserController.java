@@ -66,7 +66,6 @@ public class UserController {
         return userService.deleteUser(id);
     }
 }
-//TODO: Refactor with @autowired
 //TODO: Postman tests
 //TODO: Global Exception Handler
 //TODO: Unit test
@@ -78,6 +77,6 @@ public class UserController {
 //TODO: restart policy
 //TODO: logs
 //TODO: env variables
-//TODO: add company model for scalability
+//TODO: add company model for scalability(make film about that)
 //TODO: update readme
 //TODO: github actions
