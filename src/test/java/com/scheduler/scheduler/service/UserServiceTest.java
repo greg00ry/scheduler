@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +28,8 @@ public class UserServiceTest {
     private UserRepository userRepository;
     @InjectMocks
     private UserService userService;
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     @Test
     void getUser_shouldReturnUserDTO_whenUserExists() {
@@ -83,6 +86,8 @@ public class UserServiceTest {
 
         when(userRepository.existsByEmail("jan@test.com")).thenReturn(false);
         when(userRepository.save(any(User.class))).thenReturn(saved);
+        when(passwordEncoder.encode(any())).thenReturn("hashedPassword");
+
 
         // when
         UserDTO result = userService.createUser(dto);

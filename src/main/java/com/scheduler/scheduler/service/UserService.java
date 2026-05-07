@@ -105,9 +105,9 @@ public class UserService {
             user.setPassword(passwordEncoder.encode(createUserDTO.getPassword()));
             user.setRole(createUserDTO.getRole());
 
-            userRepository.save(user);
+            User saved = userRepository.save(user);
 
-            return createUserDTO(user);
+            return createUserDTO(saved);
         }
 
     }
