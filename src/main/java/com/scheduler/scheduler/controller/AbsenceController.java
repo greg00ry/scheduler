@@ -1,5 +1,6 @@
 package com.scheduler.scheduler.controller;
 
+import com.scheduler.scheduler.dto.AbsenceDTO;
 import com.scheduler.scheduler.dto.CreateAbsenceDTO;
 import com.scheduler.scheduler.service.AbsenceService;
 import jakarta.validation.Valid;
@@ -14,7 +15,7 @@ public class AbsenceController {
     private final AbsenceService absenceService;
 
     @PostMapping()
-    public CreateAbsenceDTO createAbsence (@RequestBody @Valid CreateAbsenceDTO createAbsenceDTO) {
+    public AbsenceDTO createAbsence (@RequestBody @Valid CreateAbsenceDTO createAbsenceDTO) {
         return absenceService.createAbsence(createAbsenceDTO);
     }
 

@@ -1,5 +1,6 @@
 package com.scheduler.scheduler.service;
 
+import com.scheduler.scheduler.dto.AbsenceDTO;
 import com.scheduler.scheduler.dto.CreateAbsenceDTO;
 import com.scheduler.scheduler.model.Absence;
 import com.scheduler.scheduler.repository.AbsenceRepository;
@@ -19,7 +20,7 @@ public class AbsenceService {
 
 
     @Transactional
-    public CreateAbsenceDTO createAbsence(CreateAbsenceDTO createAbsenceDTO) {
+    public AbsenceDTO createAbsence(CreateAbsenceDTO createAbsenceDTO) {
 
         if (absenceRepository.existsByShiftAndUser(shiftRepository.findById(createAbsenceDTO.getShiftId())
                 .orElseThrow(),
@@ -39,7 +40,14 @@ public class AbsenceService {
 
         Absence saved = absenceRepository.save(absence);
 
-        return createAbsenceDTO;
+        AbsenceDTO dto = new AbsenceDTO();
+
+        dto.setId(saved.getId());
+        dto.setShift(saved.getShift());
+        dto.setReason(saved.getReason());
+        dto.setReportedAt(saved.getReportedAt());
+
+        return dto;
     }
 
     @Transactional

@@ -67,7 +67,6 @@ public class UserController {
     }
 }
 //TODO: Postman tests
-//TODO: Global Exception Handler
 //TODO: Unit test
 //TODO: NGINX
 //TODO: Permissions

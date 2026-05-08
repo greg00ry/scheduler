@@ -12,7 +12,7 @@ public class AbsenceDTO {
     @NotNull
     private Long id;
     @NotNull
-    private ShiftDTO shift;
+    private Shift shift;
     @NotBlank
     private String reason;
     @NotNull
