@@ -60,7 +60,7 @@ public class ShiftService {
 
     }
 
-    private ShiftDTO createShiftDTO (Shift shift) {
+    public ShiftDTO createShiftDTO (Shift shift) {
         ShiftDTO dto = new ShiftDTO();
         dto.setId(shift.getId());
         dto.setUserDTO(userService.getUser(shift.getUser().getId()));
