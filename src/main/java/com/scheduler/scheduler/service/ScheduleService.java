@@ -47,11 +47,7 @@ public class ScheduleService {
         Schedule saved = scheduleRepository.save(schedule);
         List<CreateShiftDTO> shiftDTOS = createScheduleDTO.getShifts();
 
-        shiftDTOS.forEach(s -> s.setScheduleId(saved.getId()));
 
-        shiftDTOS.stream()
-                .map(shiftService::createShift)
-                .toList();
 
         shiftDTOS.stream()
                 .map(CreateShiftDTO::getUserId)
@@ -64,6 +60,12 @@ public class ScheduleService {
                     wh.setOvertimeHours(0);
                     workingHoursRepository.save(wh);
                 });
+
+        shiftDTOS.forEach(s -> s.setScheduleId(saved.getId()));
+
+        shiftDTOS.stream()
+                .map(shiftService::createShift)
+                .toList();
 
         return createScheduleDTO(saved);
     }

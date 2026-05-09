@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping("/details")
-    public UserDetailsDTO getUserDetails(@PathVariable Long id) {
+    public UserDetailsDTO getUserDetails(@RequestParam Long id) {
         return userService.getUserDetails(id);
     }
 
@@ -73,7 +73,6 @@ public class UserController {
 //TODO: Postgres
 //TODO: Ingest admin user
 //TODO: Docker-compose
-//TODO: restart policy
 //TODO: logs
 //TODO: env variables
 //TODO: add company model for scalability(make film about that)

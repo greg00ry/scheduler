@@ -52,7 +52,7 @@ public class ShiftService {
 
         Shift saved = shiftRepository.save(shift);
 
-        workingHoursService.calculateHours(shift.getUser(), shift);
+        workingHoursService.calculateHours(shift.getUser(), shift, shift.getSchedule());
 
         workingHoursService.calculateOvertime(shift.getSchedule(), shift.getUser());
 

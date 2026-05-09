@@ -20,7 +20,7 @@ public class Schedule {
     private List<Shift> shiftList;
 
     @OneToMany(mappedBy = "schedule")
-    private List<Shift> workingHours;
+    private List<WorkingHours> workingHours;
 
     private float workingHoursTarget;
 
