@@ -25,6 +25,6 @@ public class AuthService {
         if (!passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
             return ResponseEntity.status(401).body("Invalid credentials");
         }
-        return ResponseEntity.ok((jwtService.generateToken(user.getEmail())));
+        return ResponseEntity.ok((jwtService.generateToken(user.getEmail(), user.getId(), user.getRole().toString())));
     }
 }

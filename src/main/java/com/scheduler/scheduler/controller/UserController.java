@@ -78,3 +78,5 @@ public class UserController {
 //TODO: add company model for scalability(make film about that)
 //TODO: update readme
 //TODO: github actions
+//TODO: update schedule endpoint
+//TODO: add archive schedule after a date
