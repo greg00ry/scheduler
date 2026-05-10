@@ -67,9 +67,6 @@ public class UserController {
     }
 }
 //TODO: soft delete for user and validation before creationa that checks if user is active
-//TODO: empployee can change only absences and availibility, and see only future shifts
-//TODO: manager can add schedule add users, add availibility and absences for everyone
-//TODO: only admin can add new schedule after date, can see admin dashboard, and do things all the user can
 //TODO: Postman tests
 //TODO: Unit test
 //TODO: NGINX

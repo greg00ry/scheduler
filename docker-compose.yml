@@ -1,0 +1,17 @@
+services:
+  backend:
+    image: greg00ry/scheduler:prodv4
+    ports:
+      - "8080:8080"
+    environment:
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRATION=86400000
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+    restart: unless-stopped
+  frontend:
+    image: greg00ry/scheduler:frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped

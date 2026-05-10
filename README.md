@@ -1,16 +1,36 @@
-# Scheduler API
+# Scheduler
 
-REST API for employee schedule management built with Spring Boot. Allows managers to create work schedules, assign shifts to employees, and track availability and absences.
+Employee scheduling system built with Spring Boot and React. Managers can create work schedules, assign shifts, and track employee availability and absences.
+
+**Live demo:** [scheduler-demo.gt-processing.com](http://scheduler-demo.gt-processing.com)
 
 ## Tech Stack
 
+**Backend**
 - Java 21
 - Spring Boot 4.0.5
 - Spring Data JPA
 - Spring Security + JWT
-- H2 (in-memory database)
+- H2 (demo) / PostgreSQL (production)
 - Lombok
-- Bean Validation
+
+**Frontend**
+- React + TypeScript
+- Axios
+- TanStack Query
+
+**Infrastructure**
+- Docker + Docker Compose
+- NGINX (reverse proxy)
+- Oracle Cloud Infrastructure (OCI VM)
+
+## Architecture
+
+```
+Internet → NGINX (port 80) → React frontend
+                           → Spring Boot API (port 8080)
+                                          → H2 in-memory DB
+```
 
 ## Getting Started
 
@@ -18,12 +38,13 @@ REST API for employee schedule management built with Spring Boot. Allows manager
 ./mvnw spring-boot:run
 ```
 
-API will be available at `http://localhost:8080`
+Set environment variables before running:
+```
+JWT_SECRET=your-base64-secret-minimum-32-characters
+ADMIN_PASSWORD=your-admin-password
+```
 
-Set the following environment variables before running:
-```
-JWT_SECRET=your-secret-key-minimum-32-characters
-```
+API available at `http://localhost:8080`
 
 ## API Endpoints
 
@@ -31,7 +52,7 @@ JWT_SECRET=your-secret-key-minimum-32-characters
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/api/auth/login` | Login and receive JWT token |
+| POST | `/api/auth/login` | Login, returns JWT token |
 
 ### Users `/api/user`
 
@@ -39,11 +60,12 @@ JWT_SECRET=your-secret-key-minimum-32-characters
 |--------|----------|-------------|
 | GET | `/api/user/{id}` | Get user by ID |
 | GET | `/api/user/all` | Get all users |
-| GET | `/api/user/{id}/details` | Get user with absences and working hours |
+| GET | `/api/user/details?id={id}` | Get user with absences and working hours |
 | GET | `/api/user/available?date={date}` | Get available users by date |
 | GET | `/api/user/by-role?role={role}` | Get users by role |
-| POST | `/api/user` | Create new user |
+| POST | `/api/user` | Create new user (MANAGER, ADMIN) |
 | PUT | `/api/user/update` | Update user |
+| DELETE | `/api/user/{id}` | Delete user (ADMIN only) |
 
 ### Schedules `/api/schedule`
 
@@ -51,7 +73,7 @@ JWT_SECRET=your-secret-key-minimum-32-characters
 |--------|----------|-------------|
 | GET | `/api/schedule/{id}` | Get schedule by ID |
 | GET | `/api/schedule/all` | Get all schedules |
-| POST | `/api/schedule/create` | Create schedule with shifts |
+| POST | `/api/schedule/create` | Create schedule with shifts (MANAGER, ADMIN) |
 | GET | `/api/schedule/{id}/shifts` | Get all shifts for a schedule |
 | GET | `/api/schedule/shift/{id}` | Get shift by ID |
 | GET | `/api/schedule/shift/all` | Get all shifts |
@@ -72,17 +94,26 @@ JWT_SECRET=your-secret-key-minimum-32-characters
 
 ## Roles
 
-- `EMPLOYEE` - regular worker
-- `MANAGER` - can create and manage schedules
+| Role | Permissions |
+|------|-------------|
+| `ADMIN` | Full access, manages all companies |
+| `MANAGER` | Creates schedules, manages employees |
+| `EMPLOYEE` | Views own schedule, reports absences and availability |
 
 ## Deployment
 
-Deployed on Oracle Cloud Infrastructure (OCI). Author holds OCI Associate certification.
-(in progress)
+Deployed on Oracle Cloud Infrastructure VM using Docker Compose.
+
+```bash
+# On the VM
+docker compose up -d
+```
 
 ## Roadmap
 
-- Role-based authorization (in progress)
-- Work schedule validator — Polish labor code compliance (in progress)
-- Auto-scheduling microservice (in progress)
-- CI/CD pipeline with OCI Container Registry
+- Polish labor code compliance validator
+- Multi-tenant support (Company model)
+- WebSocket notifications
+- RFID attendance tracking
+- Mobile app (React Native)
+- CI/CD with GitHub Actions
