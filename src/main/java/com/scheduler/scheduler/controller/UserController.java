@@ -66,12 +66,15 @@ public class UserController {
         return userService.deleteUser(id);
     }
 }
+//TODO: soft delete for user and validation before creationa that checks if user is active
+//TODO: empployee can change only absences and availibility, and see only future shifts
+//TODO: manager can add schedule add users, add availibility and absences for everyone
+//TODO: only admin can add new schedule after date, can see admin dashboard, and do things all the user can
 //TODO: Postman tests
 //TODO: Unit test
 //TODO: NGINX
 //TODO: Permissions
 //TODO: Postgres
-//TODO: Ingest admin user
 //TODO: Docker-compose
 //TODO: logs
 //TODO: env variables
@@ -80,3 +83,7 @@ public class UserController {
 //TODO: github actions
 //TODO: update schedule endpoint
 //TODO: add archive schedule after a date
+//TODO: accepts absences by manager and admin
+//TODO: websockets for events with schedule
+//TODO: easy company chat
+//TODO: register endpoint
