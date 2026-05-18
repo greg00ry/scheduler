@@ -66,21 +66,14 @@ public class UserController {
         return userService.deleteUser(id);
     }
 }
-//TODO: soft delete for user and validation before creationa that checks if user is active
 //TODO: Postman tests
 //TODO: Unit test
-//TODO: NGINX
-//TODO: Permissions
 //TODO: Postgres
-//TODO: Docker-compose
-//TODO: logs
-//TODO: env variables
 //TODO: add company model for scalability(make film about that)
 //TODO: update readme
-//TODO: github actions
-//TODO: update schedule endpoint
 //TODO: add archive schedule after a date
 //TODO: accepts absences by manager and admin
 //TODO: websockets for events with schedule
 //TODO: easy company chat
 //TODO: register endpoint
+//TODO: remember to end this fuckin test for validation
