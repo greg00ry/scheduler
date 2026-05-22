@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import java.time.Duration;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,7 +18,8 @@ public class ScheduleValidator {
         public List<String> validate(List<CreateShiftDTO> shifts, CreateScheduleDTO schedule) {
             List<String> violations = new ArrayList<>();
             DailyWorkHours(shifts, violations);
-            WeeklyWorkhours(shifts, violations, schedule);
+            WeeklyWorkHours(shifts, violations, schedule);
+            MinRestBetweenShift(shifts, violations);
             return violations;
         }
 
@@ -38,7 +40,7 @@ public class ScheduleValidator {
                                 });
                     });
         }
-        private void WeeklyWorkhours(List<CreateShiftDTO> shifts, List<String> violations, CreateScheduleDTO schedule) {
+        private void WeeklyWorkHours(List<CreateShiftDTO> shifts, List<String> violations, CreateScheduleDTO schedule) {
             shifts.stream()
                     .collect(Collectors.groupingBy(CreateShiftDTO::getUserId))
                     .forEach((userId, userShifts) -> {
@@ -56,4 +58,21 @@ public class ScheduleValidator {
                                 });
                     });
         }
+        private void MinRestBetweenShift(List<CreateShiftDTO> shifts, List<String> violations) {
+            shifts.stream()
+                    .collect(Collectors.groupingBy(CreateShiftDTO::getUserId))
+                    .forEach((userId, userShifts) -> {
+                        userShifts.sort(Comparator.comparing(CreateShiftDTO::getStartTime));
+                        for (int i = 0; i < userShifts.size() - 1; i++) {
+                            long restMinutes = Duration.between(
+                                    userShifts.get(i).getEndTime(),
+                                    userShifts.get(i + 1).getStartTime()
+                            ).toMinutes();
+                            if (restMinutes < 660) {
+                                violations.add("User " + userId + " ma mniej niz 11h odpoczynku między zmianami");
+                            }
+                        }
+                    });
+        }
+
 }
