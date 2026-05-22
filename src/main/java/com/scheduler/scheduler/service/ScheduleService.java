@@ -23,6 +23,7 @@ public class ScheduleService {
     private final UserRepository userRepository;
     private final ShiftService shiftService;
     private final WorkingHoursRepository workingHoursRepository;
+    private final ScheduleValidator scheduleValidator;
 
 
 
@@ -70,6 +71,12 @@ public class ScheduleService {
         return createScheduleDTO(saved);
     }
 
+
+    public List<String> validate(CreateScheduleDTO createScheduleDTO) {
+        return scheduleValidator.validate(createScheduleDTO.getShifts(), createScheduleDTO);
+    }
+
+
     private ScheduleDTO createScheduleDTO (Schedule schedule) {
         ScheduleDTO dto = new ScheduleDTO();
         dto.setId(schedule.getId());
@@ -78,4 +85,5 @@ public class ScheduleService {
         dto.setCreatedBy_id(userService.getUser(schedule.getCreatedBy_id().getId()));
         return dto;
     }
+
 }
