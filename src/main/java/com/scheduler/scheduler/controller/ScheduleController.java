@@ -10,6 +10,7 @@ import com.scheduler.scheduler.service.ScheduleService;
 
 import com.scheduler.scheduler.service.ShiftService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,6 +53,15 @@ public class ScheduleController {
     @PostMapping("/create")
     public ScheduleDTO create(@RequestBody CreateScheduleDTO schedule) {
         return scheduleService.createSchedule(schedule);
+    }
+
+    @PostMapping("/validate")
+    public ResponseEntity<List<String>> validate(@RequestBody CreateScheduleDTO schedule) {
+        List<String> violations = scheduleService.validate(schedule);
+        if (violations.isEmpty()) {
+            return ResponseEntity.ok(violations);
+        }
+        return ResponseEntity.badRequest().body(violations);
     }
 
 
