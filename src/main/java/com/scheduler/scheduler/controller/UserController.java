@@ -76,4 +76,4 @@ public class UserController {
 //TODO: websockets for events with schedule
 //TODO: easy company chat
 //TODO: register endpoint
-//TODO: remember to end this fuckin test for validation
+//TODO: blockchain to saved schedule to ensure if nobody will delete old schedules
