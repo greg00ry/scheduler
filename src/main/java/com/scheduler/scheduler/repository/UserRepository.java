@@ -27,4 +27,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 
     Optional<User> findByEmail(@NotBlank String email);
+
+    Optional<User> findByRFIDCard(String rfid);
 }

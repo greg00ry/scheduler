@@ -1,9 +1,11 @@
 package com.scheduler.scheduler.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
+@Data
 @Entity
 public class Attendance {
     @Id
@@ -13,4 +15,5 @@ public class Attendance {
     private User user;
     private LocalDateTime checkIn;
     private LocalDateTime checkOut;
+    private long duration;
 }
