@@ -48,7 +48,10 @@ public class ScheduleService {
         Schedule saved = scheduleRepository.save(schedule);
         List<CreateShiftDTO> shiftDTOS = createScheduleDTO.getShifts();
 
-
+        List<String> violations = validate(createScheduleDTO);
+        if (!violations.isEmpty()) {
+            throw new RuntimeException("Schedule validation failed: " + violations);
+        }
 
         shiftDTOS.stream()
                 .map(CreateShiftDTO::getUserId)

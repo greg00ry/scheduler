@@ -24,6 +24,9 @@ public class Shift {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
+    private LocalDateTime realStartTime;
+    private LocalDateTime realEndTime;
+
     private String status;
 
     private boolean isValid;
