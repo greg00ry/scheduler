@@ -18,6 +18,7 @@ public class User {
     private String lastName;
     private String email;
     private String password;
+    private String RFIDCard;
 
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

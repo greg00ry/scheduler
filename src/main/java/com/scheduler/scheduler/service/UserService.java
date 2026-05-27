@@ -131,6 +131,16 @@ public class UserService {
         return ResponseEntity.noContent().build();
     }
 
+    @Transactional
+    public UserDTO assignRFIDToUser(String rfid, Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.setRFIDCard(rfid);
+        userRepository.save(user);
+
+        return createUserDTO(user);
+    }
+
     private UserDTO createUserDTO (User user) {
         UserDTO dto = new UserDTO();
         dto.setId(user.getId());

@@ -108,4 +108,41 @@ public class UserServiceTest {
         assertThatThrownBy(() -> userService.createUser(dto))
                 .isInstanceOf(ExistingUserException.class);
     }
+
+    @Test
+    void assignRFIDToUser_shouldReturnUserDTO_whenUserExists() {
+        //given
+        User user = TestDataFactory.createUser(1L, "Jan", "Kowalski", Role.EMPLOYEE);
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+
+        //when
+        UserDTO result = userService.assignRFIDToUser("0000241127", 1L);
+
+        //then
+        assertThat(result.getId()).isEqualTo(1L);
+
+    }
+    @Test
+    void assignRFIDToUser_shouldReturnUserDTO_whenUserNotFound() {
+        //given
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
+
+        //then
+        assertThatThrownBy(() -> userService.assignRFIDToUser("0000241127", 99L))
+                .isInstanceOf(RuntimeException.class);
+    }
+
+    @Test
+    void assignRFIDToUser_shouldSetRFID_whenUserExists() {
+        //given
+        User user = TestDataFactory.createUser(1L, "Jan", "Kowalski", Role.EMPLOYEE);
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(userRepository.save(any(User.class))).thenReturn(user);
+
+        //when
+        userService.assignRFIDToUser("0000241127", 1L);
+
+        //then
+        assertThat(user.getRFIDCard()).isEqualTo("0000241127");
+    }
 }

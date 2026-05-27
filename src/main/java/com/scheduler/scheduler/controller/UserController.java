@@ -1,9 +1,6 @@
 package com.scheduler.scheduler.controller;
 
-import com.scheduler.scheduler.dto.CreateUserDTO;
-import com.scheduler.scheduler.dto.UpdateUserDTO;
-import com.scheduler.scheduler.dto.UserDTO;
-import com.scheduler.scheduler.dto.UserDetailsDTO;
+import com.scheduler.scheduler.dto.*;
 import com.scheduler.scheduler.model.Role;
 import com.scheduler.scheduler.service.UserService;
 import jakarta.validation.Valid;
@@ -55,6 +52,11 @@ public class UserController {
     @PostMapping
     public UserDTO create(@RequestBody @Valid CreateUserDTO employee) {
         return userService.createUser(employee);
+    }
+
+    @PostMapping("/rfid")
+    public UserDTO createWithRFID(@RequestBody @Valid AssignRFIDDTO employee) {
+        return userService.assignRFIDToUser(employee.getRfid(), employee.getId());
     }
 
     @PutMapping("/update")
