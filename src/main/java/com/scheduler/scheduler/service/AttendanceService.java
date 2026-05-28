@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 @RequiredArgsConstructor
 public class AttendanceService {
@@ -22,7 +24,8 @@ public class AttendanceService {
     private final UserRepository userRepository;
 
     public List<AttendanceDTO> getAttendanceByUser(Long userId) {
-        return attendanceRepository.findAllByUser_Id(userId);
+        return attendanceRepository.findAllByUser_Id(userId).stream()
+                .map(this::createAttendanceDTO).toList();
     }
 
     @Transactional
@@ -45,5 +48,14 @@ public class AttendanceService {
             attendanceRepository.save(att);
             return ResponseEntity.ok("CHECK_IN");
         }
+    }
+    private AttendanceDTO createAttendanceDTO(Attendance attendance) {
+        AttendanceDTO dto = new AttendanceDTO();
+        dto.setId(attendance.getId());
+        dto.setUserid(attendance.getUser().getId());
+        dto.setCheckIn(attendance.getCheckIn());
+        dto.setCheckOut(attendance.getCheckOut());
+        dto.setDuration(attendance.getDuration());
+        return dto;
     }
 }

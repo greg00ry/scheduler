@@ -1,10 +1,13 @@
 package com.scheduler.scheduler.dto;
 
-import java.time.LocalDateTime;
+import com.scheduler.scheduler.model.User;
+import lombok.Data;
 
+import java.time.LocalDateTime;
+@Data
 public class AttendanceDTO {
     private Long id;
-    private UserDTO user;
+    private Long userid;
     private LocalDateTime checkIn;
     private LocalDateTime checkOut;
     private long duration;
