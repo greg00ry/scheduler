@@ -15,4 +15,5 @@ public class UserDTO {
     private String lastName;
     @NotNull
     private Role role;
+    private String rfid;
 }
