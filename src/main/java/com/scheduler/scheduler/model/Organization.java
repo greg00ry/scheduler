@@ -13,6 +13,6 @@ public class Organization {
     private String name;
 
     @JsonIgnore
-    @OneToOne
+    @ManyToOne
     User owner;
 }
