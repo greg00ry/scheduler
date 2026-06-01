@@ -5,6 +5,7 @@ import com.scheduler.scheduler.dto.CreateOrganizationDTO;
 import com.scheduler.scheduler.dto.OrganizationDTO;
 import com.scheduler.scheduler.service.OrganizationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,13 +22,23 @@ public class OrganizationController {
         return organizationService.getOrganization(id);
     }
 
-    @GetMapping("/all/{ownerId}")
-    public List<OrganizationDTO> getAllOrganizations(@PathVariable Long ownerId) {
-        return organizationService.getAllOrganizations(ownerId);
+    @GetMapping("/all}")
+    public List<OrganizationDTO> getAllOrganizations() {
+        return organizationService.getAllOrganizations();
+    }
+
+    @GetMapping("/all/{ownerId}/{active}")
+    public List<OrganizationDTO> getAllOwnerOrganizations(@PathVariable Long ownerId, @PathVariable boolean active) {
+        return organizationService.getAllOwnerOrganizations(active, ownerId);
     }
 
     @PostMapping("/create")
     public OrganizationDTO createOrganization(@RequestBody CreateOrganizationDTO organization) {
         return organizationService.createOrganization(organization);
+    }
+
+    @PostMapping("/archive/{id}")
+    public ResponseEntity<Void> archiveOrganization(@PathVariable Long id) {
+        return organizationService.archiveOrganization(id);
     }
 }
