@@ -7,6 +7,8 @@ import com.scheduler.scheduler.repository.OrganizationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class OrganizationService {
@@ -19,5 +21,15 @@ public class OrganizationService {
         dto.setName(organization.getName());
         dto.setOwnerId(organization.getOwner().getId());
         return dto;
+    }
+    public List<OrganizationDTO> getAllOrganizations(Long ownerId) {
+        List<Organization> organizations = organizationRepository.findAllByOwnerId(ownerId);
+        return organizations.stream()
+                .map(organization -> {
+                    OrganizationDTO dto = new OrganizationDTO();
+                    dto.setName(organization.getName());
+                    dto.setOwnerId(organization.getOwner().getId());
+                    return dto;
+                }).toList();
     }
 }
