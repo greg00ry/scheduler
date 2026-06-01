@@ -30,6 +30,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Availability> availabilityList;
 
+    @ManyToOne
+    private Organization organization;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
