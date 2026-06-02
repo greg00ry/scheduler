@@ -10,5 +10,7 @@ public class ScheduleDTO {
     private Long id;
     private LocalDateTime weekStart;
     private LocalDateTime weekEnd;
-    private UserDTO createdBy_id;
+    private Long createdBy_id;
+    private boolean isActive;
+    private Long organizationId;
 }

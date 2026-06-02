@@ -16,6 +16,11 @@ public class Schedule {
     private LocalDateTime weekStart;
     private LocalDateTime weekEnd;
 
+    private boolean isActive;
+
+    @ManyToOne
+    private Organization organization;
+
     @OneToMany(mappedBy = "schedule")
     private List<Shift> shiftList;
 

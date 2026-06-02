@@ -17,4 +17,6 @@ public class CreateScheduleDTO  {
     private Long createdBy_id;
     @NotNull
     private List<CreateShiftDTO> shifts;
+    @NotNull
+    private Long organizationId;
 }

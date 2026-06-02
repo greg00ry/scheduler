@@ -5,26 +5,32 @@ import com.scheduler.scheduler.dto.shift.CreateShiftDTO;
 import com.scheduler.scheduler.dto.schedule.ScheduleDTO;
 import com.scheduler.scheduler.model.Schedule;
 import com.scheduler.scheduler.model.WorkingHours;
+import com.scheduler.scheduler.repository.OrganizationRepository;
 import com.scheduler.scheduler.repository.ScheduleRepository;
 
 import com.scheduler.scheduler.repository.UserRepository;
 import com.scheduler.scheduler.repository.WorkingHoursRepository;
+import de.focus_shift.jollyday.core.HolidayCalendar;
+import de.focus_shift.jollyday.core.HolidayManager;
+import de.focus_shift.jollyday.core.ManagerParameter;
+import de.focus_shift.jollyday.core.ManagerParameters;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
-    private final UserService userService;
     private final UserRepository userRepository;
     private final ShiftService shiftService;
     private final WorkingHoursRepository workingHoursRepository;
     private final ScheduleValidator scheduleValidator;
-
+    private final OrganizationRepository organizationRepository;
 
 
     public ScheduleDTO getSchedule(Long id) {
@@ -33,19 +39,43 @@ public class ScheduleService {
         return createScheduleDTO((schedule));
     }
 
-    //TODO: Check for unused classes
     public List<ScheduleDTO> getAllSchedules() {
         return scheduleRepository.findAll().stream()
                 .map(this::createScheduleDTO).toList();
     }
     @Transactional
     public ScheduleDTO createSchedule(CreateScheduleDTO createScheduleDTO) {
+
         Schedule schedule = new Schedule();
+
         schedule.setWeekStart(createScheduleDTO.getWeekStart());
+
         schedule.setWeekEnd(createScheduleDTO.getWeekEnd());
+
         schedule.setCreatedBy_id(userRepository.findById(createScheduleDTO.getCreatedBy_id())
                 .orElseThrow(() -> new RuntimeException("User not exists")));
+
+        schedule.setActive(true);
+
+        schedule.setOrganization(organizationRepository.findById(createScheduleDTO.getOrganizationId())
+                .orElseThrow(() -> new RuntimeException("Organization not exists")));
+
+        HolidayManager holidayManager = HolidayManager.getInstance(ManagerParameters.create(HolidayCalendar.POLAND));
+
+        long workingDays = createScheduleDTO.getWeekStart().toLocalDate()
+                .datesUntil(createScheduleDTO.getWeekEnd().toLocalDate())
+                .filter(d -> d.getDayOfWeek() != DayOfWeek.SATURDAY)
+                .filter(d -> d.getDayOfWeek() != DayOfWeek.SUNDAY)
+                .filter(d -> !holidayManager.isHoliday(d))
+                .count();
+
+        float targetHours = (float) workingDays * 8;
+
+        schedule.setWorkingHoursTarget(targetHours);
+
         Schedule saved = scheduleRepository.save(schedule);
+
+
         List<CreateShiftDTO> shiftDTOS = createScheduleDTO.getShifts();
 
         List<String> violations = validate(createScheduleDTO);
@@ -74,6 +104,14 @@ public class ScheduleService {
         return createScheduleDTO(saved);
     }
 
+    public ResponseEntity<Void> deleteSchedule(Long id) {
+        Schedule sch = scheduleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Schedule not found"));
+        sch.setActive(false);
+        scheduleRepository.save(sch);
+        return ResponseEntity.noContent().build();
+    }
+
 
     public List<String> validate(CreateScheduleDTO createScheduleDTO) {
         return scheduleValidator.validate(createScheduleDTO.getShifts(), createScheduleDTO);
@@ -85,7 +123,7 @@ public class ScheduleService {
         dto.setId(schedule.getId());
         dto.setWeekStart(schedule.getWeekStart());
         dto.setWeekEnd(schedule.getWeekEnd());
-        dto.setCreatedBy_id(userService.getUser(schedule.getCreatedBy_id().getId()));
+        dto.setCreatedBy_id(schedule.getCreatedBy_id().getId());
         return dto;
     }
 
