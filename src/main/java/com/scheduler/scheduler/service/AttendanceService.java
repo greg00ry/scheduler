@@ -28,9 +28,13 @@ public class AttendanceService {
 
     @Transactional
     public ResponseEntity<String> markAttendance(String rfid) {
+
+        if (rfid.length() != 10) {
+            return ResponseEntity.badRequest().body("Invalid RFID length");
+        }
+
         User user = userRepository.findByRFIDCard(rfid)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
 
         Optional<Attendance> existing = attendanceRepository.findByUserAndCheckOutIsNull(user);
         if (existing.isPresent()) {
