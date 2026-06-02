@@ -5,9 +5,10 @@ package com.scheduler.scheduler.controller;
 import com.scheduler.scheduler.dto.schedule.CreateScheduleDTO;
 import com.scheduler.scheduler.dto.schedule.ScheduleDTO;
 import com.scheduler.scheduler.dto.shift.ShiftDTO;
-import com.scheduler.scheduler.service.ScheduleService;
+import com.scheduler.scheduler.service.schedule.ScheduleCommandService;
 
-import com.scheduler.scheduler.service.ShiftService;
+import com.scheduler.scheduler.service.schedule.ScheduleQueryService;
+import com.scheduler.scheduler.service.shift.ShiftService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
@@ -22,19 +23,19 @@ import java.util.List;
 @RequestMapping("/api/schedule")
 @RequiredArgsConstructor
 public class ScheduleController {
-    private final ScheduleService scheduleService;
+    private final ScheduleCommandService scheduleService;
     private final ShiftService shiftService;
-
+    private final ScheduleQueryService scheduleQueryService;
 
 
     @GetMapping("/{id}")
     public ResponseEntity<ScheduleDTO> getSchedule(@PathVariable @Positive Long id) {
-        return ResponseEntity.ok(scheduleService.getSchedule(id));
+        return ResponseEntity.ok(scheduleQueryService.getSchedule(id));
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<ScheduleDTO>> getAllSchedules() {
-        return ResponseEntity.ok(scheduleService.getAllSchedules());
+        return ResponseEntity.ok(scheduleQueryService.getAllSchedules());
     }
 
     @GetMapping("/shift/{id}")

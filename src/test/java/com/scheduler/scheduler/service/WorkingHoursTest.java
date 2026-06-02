@@ -3,6 +3,7 @@ package com.scheduler.scheduler.service;
 import com.scheduler.scheduler.model.User;
 import com.scheduler.scheduler.model.WorkingHours;
 import com.scheduler.scheduler.repository.WorkingHoursRepository;
+import com.scheduler.scheduler.service.workinghours.WorkingHoursService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

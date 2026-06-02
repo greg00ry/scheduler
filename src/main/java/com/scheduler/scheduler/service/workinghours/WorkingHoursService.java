@@ -1,4 +1,4 @@
-package com.scheduler.scheduler.service;
+package com.scheduler.scheduler.service.workinghours;
 
 import com.scheduler.scheduler.model.Schedule;
 import com.scheduler.scheduler.model.Shift;

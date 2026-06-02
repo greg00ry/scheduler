@@ -1,4 +1,4 @@
-package com.scheduler.scheduler.service;
+package com.scheduler.scheduler.service.shift;
 
 
 import com.scheduler.scheduler.dto.shift.CreateShiftDTO;
@@ -7,6 +7,8 @@ import com.scheduler.scheduler.model.Shift;
 import com.scheduler.scheduler.repository.ScheduleRepository;
 import com.scheduler.scheduler.repository.ShiftRepository;
 import com.scheduler.scheduler.repository.UserRepository;
+import com.scheduler.scheduler.service.workinghours.WorkingHoursService;
+import com.scheduler.scheduler.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -16,7 +16,7 @@ public class Schedule {
     private LocalDateTime weekStart;
     private LocalDateTime weekEnd;
 
-    private boolean isActive;
+    private ScheduleStatus status;
 
     @ManyToOne
     private Organization organization;

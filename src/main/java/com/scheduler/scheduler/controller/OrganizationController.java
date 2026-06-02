@@ -3,7 +3,7 @@ package com.scheduler.scheduler.controller;
 
 import com.scheduler.scheduler.dto.organization.CreateOrganizationDTO;
 import com.scheduler.scheduler.dto.organization.OrganizationDTO;
-import com.scheduler.scheduler.service.OrganizationService;
+import com.scheduler.scheduler.service.orgaznization.OrganizationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

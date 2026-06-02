@@ -1,4 +1,4 @@
-package com.scheduler.scheduler.service;
+package com.scheduler.scheduler.service.orgaznization;
 
 import com.scheduler.scheduler.dto.organization.CreateOrganizationDTO;
 import com.scheduler.scheduler.dto.organization.OrganizationDTO;

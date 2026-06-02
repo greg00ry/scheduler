@@ -6,7 +6,7 @@ import com.scheduler.scheduler.dto.user.UpdateUserDTO;
 import com.scheduler.scheduler.dto.user.UserDTO;
 import com.scheduler.scheduler.dto.user.UserDetailsDTO;
 import com.scheduler.scheduler.model.Role;
-import com.scheduler.scheduler.service.UserService;
+import com.scheduler.scheduler.service.user.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;

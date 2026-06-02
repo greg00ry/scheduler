@@ -6,6 +6,7 @@ import com.scheduler.scheduler.model.Role;
 import com.scheduler.scheduler.model.User;
 import com.scheduler.scheduler.repository.AttendanceRepository;
 import com.scheduler.scheduler.repository.UserRepository;
+import com.scheduler.scheduler.service.attendance.AttendanceService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

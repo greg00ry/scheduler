@@ -1,4 +1,4 @@
-package com.scheduler.scheduler.service;
+package com.scheduler.scheduler.service.attendance;
 
 import com.scheduler.scheduler.dto.rfid.AttendanceDTO;
 import com.scheduler.scheduler.model.Attendance;

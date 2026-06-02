@@ -1,18 +1,19 @@
-package com.scheduler.scheduler.service;
+package com.scheduler.scheduler.service.schedule;
 
 import com.scheduler.scheduler.dto.schedule.CreateScheduleDTO;
 import com.scheduler.scheduler.dto.shift.CreateShiftDTO;
 import com.scheduler.scheduler.dto.schedule.ScheduleDTO;
 import com.scheduler.scheduler.model.Schedule;
+import com.scheduler.scheduler.model.ScheduleStatus;
 import com.scheduler.scheduler.model.WorkingHours;
 import com.scheduler.scheduler.repository.OrganizationRepository;
 import com.scheduler.scheduler.repository.ScheduleRepository;
 
 import com.scheduler.scheduler.repository.UserRepository;
 import com.scheduler.scheduler.repository.WorkingHoursRepository;
+import com.scheduler.scheduler.service.shift.ShiftService;
 import de.focus_shift.jollyday.core.HolidayCalendar;
 import de.focus_shift.jollyday.core.HolidayManager;
-import de.focus_shift.jollyday.core.ManagerParameter;
 import de.focus_shift.jollyday.core.ManagerParameters;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ScheduleService {
+public class ScheduleCommandService {
     private final ScheduleRepository scheduleRepository;
     private final UserRepository userRepository;
     private final ShiftService shiftService;
@@ -32,17 +33,12 @@ public class ScheduleService {
     private final ScheduleValidator scheduleValidator;
     private final OrganizationRepository organizationRepository;
 
+    ////////////////////////////////
 
-    public ScheduleDTO getSchedule(Long id) {
-        Schedule schedule = scheduleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Schedule not found"));
-        return createScheduleDTO((schedule));
-    }
+    //TODO: Update schedule
 
-    public List<ScheduleDTO> getAllSchedules() {
-        return scheduleRepository.findAll().stream()
-                .map(this::createScheduleDTO).toList();
-    }
+    ////////////////////////////////
+
     @Transactional
     public ScheduleDTO createSchedule(CreateScheduleDTO createScheduleDTO) {
 
@@ -55,7 +51,7 @@ public class ScheduleService {
         schedule.setCreatedBy_id(userRepository.findById(createScheduleDTO.getCreatedBy_id())
                 .orElseThrow(() -> new RuntimeException("User not exists")));
 
-        schedule.setActive(true);
+        schedule.setStatus(ScheduleStatus.DRAFT);
 
         schedule.setOrganization(organizationRepository.findById(createScheduleDTO.getOrganizationId())
                 .orElseThrow(() -> new RuntimeException("Organization not exists")));
@@ -107,7 +103,7 @@ public class ScheduleService {
     public ResponseEntity<Void> deleteSchedule(Long id) {
         Schedule sch = scheduleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Schedule not found"));
-        sch.setActive(false);
+        sch.setStatus(ScheduleStatus.ARCHIVED);
         scheduleRepository.save(sch);
         return ResponseEntity.noContent().build();
     }

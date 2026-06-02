@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
+    Schedule findByIsActiveTrueAndShiftList_UserId(Long userId);
 }

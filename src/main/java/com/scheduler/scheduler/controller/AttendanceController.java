@@ -1,7 +1,7 @@
 package com.scheduler.scheduler.controller;
 
 import com.scheduler.scheduler.dto.rfid.AttendanceDTO;
-import com.scheduler.scheduler.service.AttendanceService;
+import com.scheduler.scheduler.service.attendance.AttendanceService;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -4,6 +4,9 @@ import com.scheduler.scheduler.dto.schedule.ScheduleDTO;
 import com.scheduler.scheduler.model.Schedule;
 import com.scheduler.scheduler.model.User;
 import com.scheduler.scheduler.repository.ScheduleRepository;
+import com.scheduler.scheduler.service.schedule.ScheduleCommandService;
+import com.scheduler.scheduler.service.schedule.ScheduleQueryService;
+import com.scheduler.scheduler.service.user.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,9 +24,11 @@ public class ScheduleServiceTest {
     @Mock
     private ScheduleRepository scheduleRepository;
     @InjectMocks
-    private ScheduleService scheduleService;
+    private ScheduleCommandService scheduleService;
     @Mock
     private UserService userService;
+    @InjectMocks
+    private ScheduleQueryService scheduleQueryService;
 
     @Test
     void getSchedule_returnScheduleDTO_whenScheduleExists() {
@@ -36,7 +41,7 @@ public class ScheduleServiceTest {
 
         when(scheduleRepository.findById(1L)).thenReturn(Optional.of(schedule));
         //when
-        ScheduleDTO result = scheduleService.getSchedule(1L);
+        ScheduleDTO result = scheduleQueryService.getSchedule(1L);
 
         //then
         assertThat(result.getId()).isEqualTo(1L);
@@ -47,6 +52,6 @@ public class ScheduleServiceTest {
         when(scheduleRepository.findById(1L)).thenReturn(Optional.empty());
 
         //then
-        assertThatThrownBy(() -> scheduleService.getSchedule(1L)).isInstanceOf(RuntimeException.class);
+        assertThatThrownBy(() -> scheduleQueryService.getSchedule(1L)).isInstanceOf(RuntimeException.class);
     }
 }

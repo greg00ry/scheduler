@@ -1,4 +1,4 @@
-package com.scheduler.scheduler.service;
+package com.scheduler.scheduler.service.availability;
 
 
 import com.scheduler.scheduler.dto.availability.CreateAvailabilityDTO;

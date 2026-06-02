@@ -1,4 +1,4 @@
-package com.scheduler.scheduler.service;
+package com.scheduler.scheduler.service.absence;
 
 import com.scheduler.scheduler.dto.absence.AbsenceDTO;
 import com.scheduler.scheduler.dto.absence.CreateAbsenceDTO;
@@ -7,6 +7,7 @@ import com.scheduler.scheduler.model.Absence;
 import com.scheduler.scheduler.repository.AbsenceRepository;
 import com.scheduler.scheduler.repository.ShiftRepository;
 import com.scheduler.scheduler.repository.UserRepository;
+import com.scheduler.scheduler.service.shift.ShiftService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

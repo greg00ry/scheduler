@@ -1,7 +1,7 @@
 package com.scheduler.scheduler.controller;
 
 import com.scheduler.scheduler.dto.availability.CreateAvailabilityDTO;
-import com.scheduler.scheduler.service.AvailabilityService;
+import com.scheduler.scheduler.service.availability.AvailabilityService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

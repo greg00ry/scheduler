@@ -1,4 +1,4 @@
-package com.scheduler.scheduler.service;
+package com.scheduler.scheduler.service.schedule;
 
 import com.scheduler.scheduler.dto.schedule.CreateScheduleDTO;
 import com.scheduler.scheduler.dto.shift.CreateShiftDTO;
