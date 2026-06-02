@@ -1,6 +1,10 @@
-package com.scheduler.scheduler.dto.user;
+package com.scheduler.scheduler.controller;
 
 import com.scheduler.scheduler.dto.rfid.AssignRFIDDTO;
+import com.scheduler.scheduler.dto.user.CreateUserDTO;
+import com.scheduler.scheduler.dto.user.UpdateUserDTO;
+import com.scheduler.scheduler.dto.user.UserDTO;
+import com.scheduler.scheduler.dto.user.UserDetailsDTO;
 import com.scheduler.scheduler.model.Role;
 import com.scheduler.scheduler.service.UserService;
 import jakarta.validation.Valid;

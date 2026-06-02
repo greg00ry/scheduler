@@ -8,13 +8,16 @@ import com.scheduler.scheduler.dto.shift.ShiftDTO;
 import com.scheduler.scheduler.service.ScheduleService;
 
 import com.scheduler.scheduler.service.ShiftService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@Validated
 @RestController
 @RequestMapping("/api/schedule")
 @RequiredArgsConstructor
@@ -25,37 +28,37 @@ public class ScheduleController {
 
 
     @GetMapping("/{id}")
-    public ScheduleDTO getSchedule(@PathVariable Long id) {
-        return scheduleService.getSchedule(id);
+    public ResponseEntity<ScheduleDTO> getSchedule(@PathVariable @Positive Long id) {
+        return ResponseEntity.ok(scheduleService.getSchedule(id));
     }
 
     @GetMapping("/all")
-    public List<ScheduleDTO> getAllSchedules() {
-        return scheduleService.getAllSchedules();
+    public ResponseEntity<List<ScheduleDTO>> getAllSchedules() {
+        return ResponseEntity.ok(scheduleService.getAllSchedules());
     }
 
     @GetMapping("/shift/{id}")
-    public ShiftDTO getShift(@PathVariable Long id) {
-        return shiftService.getShift(id);
+    public ResponseEntity<ShiftDTO> getShift(@PathVariable @Positive Long id) {
+        return ResponseEntity.ok(shiftService.getShift(id));
     }
 
     @GetMapping("/shift/all")
-    public List<ShiftDTO> getAllShifts() {
-        return shiftService.getAllShifts();
+    public ResponseEntity<List<ShiftDTO>> getAllShifts() {
+        return ResponseEntity.ok(shiftService.getAllShifts());
     }
 
     @GetMapping("/{id}/shifts")
-    public List<ShiftDTO> getShiftsBySchedule(@PathVariable Long id) {
-        return shiftService.getShiftsByScheduleId(id);
+    public ResponseEntity<List<ShiftDTO>> getShiftsBySchedule(@PathVariable @Positive Long id) {
+        return ResponseEntity.ok(shiftService.getShiftsByScheduleId(id));
     }
 
-    @PostMapping("/create")
-    public ScheduleDTO create(@RequestBody CreateScheduleDTO schedule) {
-        return scheduleService.createSchedule(schedule);
+    @PostMapping()
+    public ResponseEntity<ScheduleDTO> create(@RequestBody @Valid CreateScheduleDTO schedule) {
+        return ResponseEntity.status(201).body(scheduleService.createSchedule(schedule));
     }
 
     @PostMapping("/validate")
-    public ResponseEntity<List<String>> validate(@RequestBody CreateScheduleDTO schedule) {
+    public ResponseEntity<List<String>> validate(@RequestBody @Valid CreateScheduleDTO schedule) {
         List<String> violations = scheduleService.validate(schedule);
         if (violations.isEmpty()) {
             return ResponseEntity.ok(violations);
