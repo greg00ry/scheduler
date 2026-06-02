@@ -14,8 +14,8 @@ public class AvailabilityController {
     private final AvailabilityService availabilityService;
 
     @PostMapping()
-    public CreateAvailabilityDTO createAvailability (@RequestBody @Valid CreateAvailabilityDTO createAvailabilityDTO) {
-        return availabilityService.createAvailability(createAvailabilityDTO);
+    public ResponseEntity<CreateAvailabilityDTO> createAvailability (@RequestBody @Valid CreateAvailabilityDTO createAvailabilityDTO) {
+        return ResponseEntity.status(201).body(availabilityService.createAvailability(createAvailabilityDTO));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAvailability (@PathVariable Long id) {
