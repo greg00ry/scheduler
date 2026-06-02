@@ -1,6 +1,6 @@
 package com.scheduler.scheduler.controller;
 
-import com.scheduler.scheduler.dto.CreateAvailabilityDTO;
+import com.scheduler.scheduler.dto.availability.CreateAvailabilityDTO;
 import com.scheduler.scheduler.service.AvailabilityService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

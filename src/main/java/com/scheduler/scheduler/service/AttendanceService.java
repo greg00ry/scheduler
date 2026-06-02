@@ -1,6 +1,6 @@
 package com.scheduler.scheduler.service;
 
-import com.scheduler.scheduler.dto.AttendanceDTO;
+import com.scheduler.scheduler.dto.rfid.AttendanceDTO;
 import com.scheduler.scheduler.model.Attendance;
 import com.scheduler.scheduler.model.User;
 import com.scheduler.scheduler.repository.AttendanceRepository;
@@ -14,8 +14,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
-import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor

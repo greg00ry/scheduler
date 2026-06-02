@@ -1,7 +1,6 @@
 package com.scheduler.scheduler.controller;
 
-import com.scheduler.scheduler.dto.AttendanceDTO;
-import com.scheduler.scheduler.model.Attendance;
+import com.scheduler.scheduler.dto.rfid.AttendanceDTO;
 import com.scheduler.scheduler.service.AttendanceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

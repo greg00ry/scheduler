@@ -1,4 +1,4 @@
-package com.scheduler.scheduler.dto;
+package com.scheduler.scheduler.dto.user;
 
 import com.scheduler.scheduler.model.Role;
 import lombok.Data;

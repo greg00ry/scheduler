@@ -1,8 +1,8 @@
 package com.scheduler.scheduler.controller;
 
 
-import com.scheduler.scheduler.dto.CreateOrganizationDTO;
-import com.scheduler.scheduler.dto.OrganizationDTO;
+import com.scheduler.scheduler.dto.organization.CreateOrganizationDTO;
+import com.scheduler.scheduler.dto.organization.OrganizationDTO;
 import com.scheduler.scheduler.service.OrganizationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

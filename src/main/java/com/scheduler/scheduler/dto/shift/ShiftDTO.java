@@ -1,5 +1,6 @@
-package com.scheduler.scheduler.dto;
+package com.scheduler.scheduler.dto.shift;
 
+import com.scheduler.scheduler.dto.user.UserDTO;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 

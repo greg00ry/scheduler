@@ -1,7 +1,7 @@
 package com.scheduler.scheduler.service;
 
-import com.scheduler.scheduler.dto.CreateScheduleDTO;
-import com.scheduler.scheduler.dto.CreateShiftDTO;
+import com.scheduler.scheduler.dto.schedule.CreateScheduleDTO;
+import com.scheduler.scheduler.dto.shift.CreateShiftDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package com.scheduler.scheduler.dto;
+package com.scheduler.scheduler.dto.availability;
 
 
 import jakarta.validation.constraints.NotNull;

@@ -1,6 +1,5 @@
-package com.scheduler.scheduler.dto;
+package com.scheduler.scheduler.dto.absence;
 
-import com.scheduler.scheduler.model.Shift;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -8,11 +7,11 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class AbsenceDTO {
+public class CreateAbsenceDTO {
     @NotNull
-    private Long id;
+    private Long userId;
     @NotNull
-    private ShiftDTO shift;
+    private Long shiftId;
     @NotBlank
     private String reason;
     @NotNull

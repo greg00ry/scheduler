@@ -1,25 +1,22 @@
-package com.scheduler.scheduler.dto;
+package com.scheduler.scheduler.dto.user;
 
 import com.scheduler.scheduler.model.Role;
-
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
-public class UserDetailsDTO {
-    @NotNull
-    private Long id;
+public class CreateUserDTO {
     @NotBlank
     private String firstName;
     @NotBlank
     private String lastName;
+    @NotBlank
+    @Email
+    private String email;
     @NotNull
     private Role role;
-    @NotNull
-    private List<AbsenceDTO> absences;
-    @NotNull
-    private List<WorkingHoursDTO> workingHoursList;
+    @NotBlank
+    private String password;
 }

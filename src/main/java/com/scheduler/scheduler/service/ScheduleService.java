@@ -1,8 +1,8 @@
 package com.scheduler.scheduler.service;
 
-import com.scheduler.scheduler.dto.CreateScheduleDTO;
-import com.scheduler.scheduler.dto.CreateShiftDTO;
-import com.scheduler.scheduler.dto.ScheduleDTO;
+import com.scheduler.scheduler.dto.schedule.CreateScheduleDTO;
+import com.scheduler.scheduler.dto.shift.CreateShiftDTO;
+import com.scheduler.scheduler.dto.schedule.ScheduleDTO;
 import com.scheduler.scheduler.model.Schedule;
 import com.scheduler.scheduler.model.WorkingHours;
 import com.scheduler.scheduler.repository.ScheduleRepository;

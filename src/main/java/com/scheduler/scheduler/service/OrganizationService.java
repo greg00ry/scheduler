@@ -1,7 +1,7 @@
 package com.scheduler.scheduler.service;
 
-import com.scheduler.scheduler.dto.CreateOrganizationDTO;
-import com.scheduler.scheduler.dto.OrganizationDTO;
+import com.scheduler.scheduler.dto.organization.CreateOrganizationDTO;
+import com.scheduler.scheduler.dto.organization.OrganizationDTO;
 import com.scheduler.scheduler.model.Organization;
 import com.scheduler.scheduler.repository.OrganizationRepository;
 import com.scheduler.scheduler.repository.UserRepository;

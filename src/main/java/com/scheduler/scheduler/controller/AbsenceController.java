@@ -1,7 +1,7 @@
 package com.scheduler.scheduler.controller;
 
-import com.scheduler.scheduler.dto.AbsenceDTO;
-import com.scheduler.scheduler.dto.CreateAbsenceDTO;
+import com.scheduler.scheduler.dto.absence.AbsenceDTO;
+import com.scheduler.scheduler.dto.absence.CreateAbsenceDTO;
 import com.scheduler.scheduler.service.AbsenceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,5 @@
-package com.scheduler.scheduler.dto;
+package com.scheduler.scheduler.dto.rfid;
 
-import com.scheduler.scheduler.model.User;
 import lombok.Data;
 
 import java.time.LocalDateTime;

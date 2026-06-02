@@ -1,6 +1,6 @@
 package com.scheduler.scheduler.service;
 
-import com.scheduler.scheduler.dto.AttendanceDTO;
+import com.scheduler.scheduler.dto.rfid.AttendanceDTO;
 import com.scheduler.scheduler.model.Attendance;
 import com.scheduler.scheduler.model.Role;
 import com.scheduler.scheduler.model.User;

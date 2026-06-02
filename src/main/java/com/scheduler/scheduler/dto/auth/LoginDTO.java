@@ -1,4 +1,4 @@
-package com.scheduler.scheduler.dto;
+package com.scheduler.scheduler.dto.auth;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;

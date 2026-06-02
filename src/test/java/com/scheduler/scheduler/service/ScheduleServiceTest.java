@@ -1,7 +1,6 @@
 package com.scheduler.scheduler.service;
 
-import com.scheduler.scheduler.dto.ScheduleDTO;
-import com.scheduler.scheduler.dto.UserDTO;
+import com.scheduler.scheduler.dto.schedule.ScheduleDTO;
 import com.scheduler.scheduler.model.Schedule;
 import com.scheduler.scheduler.model.User;
 import com.scheduler.scheduler.repository.ScheduleRepository;

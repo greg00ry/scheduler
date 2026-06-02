@@ -1,7 +1,7 @@
 package com.scheduler.scheduler.service;
 
 
-import com.scheduler.scheduler.dto.CreateAvailabilityDTO;
+import com.scheduler.scheduler.dto.availability.CreateAvailabilityDTO;
 import com.scheduler.scheduler.model.Availability;
 import com.scheduler.scheduler.repository.AvailabilityRepository;
 import com.scheduler.scheduler.repository.UserRepository;

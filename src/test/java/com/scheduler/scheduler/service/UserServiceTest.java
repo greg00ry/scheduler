@@ -1,7 +1,7 @@
 package com.scheduler.scheduler.service;
 
-import com.scheduler.scheduler.dto.CreateUserDTO;
-import com.scheduler.scheduler.dto.UserDTO;
+import com.scheduler.scheduler.dto.user.CreateUserDTO;
+import com.scheduler.scheduler.dto.user.UserDTO;
 import com.scheduler.scheduler.exception.ExistingUserException;
 import com.scheduler.scheduler.model.Role;
 import com.scheduler.scheduler.model.User;
