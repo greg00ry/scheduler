@@ -8,11 +8,13 @@ import com.scheduler.scheduler.dto.shift.ShiftDTO;
 import com.scheduler.scheduler.service.schedule.ScheduleCommandService;
 
 import com.scheduler.scheduler.service.schedule.ScheduleQueryService;
+import com.scheduler.scheduler.service.schedule.ScheduleRoutingService;
 import com.scheduler.scheduler.service.shift.ShiftService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,17 +27,17 @@ import java.util.List;
 public class ScheduleController {
     private final ScheduleCommandService scheduleService;
     private final ShiftService shiftService;
-    private final ScheduleQueryService scheduleQueryService;
+    private final ScheduleRoutingService scheduleRoutingService;
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<ScheduleDTO> getSchedule(@PathVariable @Positive Long id) {
-        return ResponseEntity.ok(scheduleQueryService.getSchedule(id));
+    public ResponseEntity<ScheduleDTO> getSchedule(@PathVariable @Positive Long id, Authentication authentication) {
+        return ResponseEntity.ok(scheduleRoutingService.routeToGetSchedule(id, authentication));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<ScheduleDTO>> getAllSchedules() {
-        return ResponseEntity.ok(scheduleQueryService.getAllSchedules());
+    public ResponseEntity<List<ScheduleDTO>> getAllSchedules(Authentication authentication) {
+        return ResponseEntity.ok(scheduleRoutingService.routeToGetAllSchedules(authentication));
     }
 
     @GetMapping("/shift/{id}")
@@ -56,6 +58,11 @@ public class ScheduleController {
     @PostMapping()
     public ResponseEntity<ScheduleDTO> create(@RequestBody @Valid CreateScheduleDTO schedule) {
         return ResponseEntity.status(201).body(scheduleService.createSchedule(schedule));
+    }
+
+    @PutMapping()
+    public ResponseEntity<ScheduleDTO> update(@RequestBody @Valid CreateScheduleDTO schedule) {
+        return ResponseEntity.ok(scheduleService.updateSchedule(schedule));
     }
 
     @PostMapping("/validate")
