@@ -1,6 +1,6 @@
 package com.scheduler.scheduler.dto.schedule;
 
-import com.scheduler.scheduler.dto.user.UserDTO;
+import com.scheduler.scheduler.model.ScheduleStatus;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -11,6 +11,6 @@ public class ScheduleDTO {
     private LocalDateTime weekStart;
     private LocalDateTime weekEnd;
     private Long createdBy_id;
-    private boolean isActive;
+    private ScheduleStatus status;
     private Long organizationId;
 }

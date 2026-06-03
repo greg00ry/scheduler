@@ -9,6 +9,7 @@ import java.util.List;
 
 @Data
 public class CreateScheduleDTO  {
+    private Long id;
     @NotNull
     private LocalDateTime weekStart;
     @NotNull

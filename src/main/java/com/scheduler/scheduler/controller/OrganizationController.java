@@ -22,7 +22,7 @@ public class OrganizationController {
         return organizationService.getOrganization(id);
     }
 
-    @GetMapping("/all}")
+    @GetMapping("/all")
     public List<OrganizationDTO> getAllOrganizations() {
         return organizationService.getAllOrganizations();
     }

@@ -17,6 +17,7 @@ import de.focus_shift.jollyday.core.HolidayManager;
 import de.focus_shift.jollyday.core.ManagerParameters;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,52 +34,82 @@ public class ScheduleCommandService {
     private final ScheduleValidator scheduleValidator;
     private final OrganizationRepository organizationRepository;
 
-    ////////////////////////////////
 
-    //TODO: Update schedule
-
-    ////////////////////////////////
-
+    @PreAuthorize("hasAnyRole('ADMIN', 'OWNER', 'MANAGER')")
     @Transactional
     public ScheduleDTO createSchedule(CreateScheduleDTO createScheduleDTO) {
-
-        Schedule schedule = new Schedule();
-
-        schedule.setWeekStart(createScheduleDTO.getWeekStart());
-
-        schedule.setWeekEnd(createScheduleDTO.getWeekEnd());
-
-        schedule.setCreatedBy_id(userRepository.findById(createScheduleDTO.getCreatedBy_id())
-                .orElseThrow(() -> new RuntimeException("User not exists")));
-
-        schedule.setStatus(ScheduleStatus.DRAFT);
-
-        schedule.setOrganization(organizationRepository.findById(createScheduleDTO.getOrganizationId())
-                .orElseThrow(() -> new RuntimeException("Organization not exists")));
-
-        HolidayManager holidayManager = HolidayManager.getInstance(ManagerParameters.create(HolidayCalendar.POLAND));
-
-        long workingDays = createScheduleDTO.getWeekStart().toLocalDate()
-                .datesUntil(createScheduleDTO.getWeekEnd().toLocalDate())
-                .filter(d -> d.getDayOfWeek() != DayOfWeek.SATURDAY)
-                .filter(d -> d.getDayOfWeek() != DayOfWeek.SUNDAY)
-                .filter(d -> !holidayManager.isHoliday(d))
-                .count();
-
-        float targetHours = (float) workingDays * 8;
-
-        schedule.setWorkingHoursTarget(targetHours);
-
-        Schedule saved = scheduleRepository.save(schedule);
-
-
-        List<CreateShiftDTO> shiftDTOS = createScheduleDTO.getShifts();
-
         List<String> violations = validate(createScheduleDTO);
         if (!violations.isEmpty()) {
             throw new RuntimeException("Schedule validation failed: " + violations);
         }
 
+        Schedule schedule = new Schedule();
+        schedule.setWeekStart(createScheduleDTO.getWeekStart());
+        schedule.setWeekEnd(createScheduleDTO.getWeekEnd());
+        schedule.setStatus(ScheduleStatus.DRAFT);
+        schedule.setCreatedBy_id(userRepository.findById(createScheduleDTO.getCreatedBy_id())
+                .orElseThrow(() -> new RuntimeException("User not exists")));
+        schedule.setOrganization(organizationRepository.findById(createScheduleDTO.getOrganizationId())
+                .orElseThrow(() -> new RuntimeException("Organization not exists")));
+        schedule.setWorkingHoursTarget(calculateWorkingHoursTarget(createScheduleDTO));
+
+        Schedule saved = scheduleRepository.save(schedule);
+        saveShiftsAndWorkingHours(createScheduleDTO.getShifts(), saved);
+
+        return toDTO(saved);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'OWNER', 'MANAGER')")
+    @Transactional
+    public ResponseEntity<Void> deleteSchedule(Long id) {
+        Schedule sch = scheduleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Schedule not found"));
+        sch.setStatus(ScheduleStatus.ARCHIVED);
+        scheduleRepository.save(sch);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'OWNER', 'MANAGER')")
+    @Transactional
+    public ScheduleDTO updateSchedule(CreateScheduleDTO createScheduleDTO) {
+        List<String> violations = validate(createScheduleDTO);
+        if (!violations.isEmpty()) {
+            throw new RuntimeException("Schedule validation failed: " + violations);
+        }
+
+        Schedule schedule = scheduleRepository.findById(createScheduleDTO.getId())
+                .orElseThrow(() -> new RuntimeException("Schedule not found"));
+        schedule.setWeekStart(createScheduleDTO.getWeekStart());
+        schedule.setWeekEnd(createScheduleDTO.getWeekEnd());
+        schedule.setCreatedBy_id(userRepository.findById(createScheduleDTO.getCreatedBy_id())
+                .orElseThrow(() -> new RuntimeException("User not exists")));
+        schedule.setOrganization(organizationRepository.findById(createScheduleDTO.getOrganizationId())
+                .orElseThrow(() -> new RuntimeException("Organization not exists")));
+        schedule.setWorkingHoursTarget(calculateWorkingHoursTarget(createScheduleDTO));
+
+        Schedule saved = scheduleRepository.save(schedule);
+        saveShiftsAndWorkingHours(createScheduleDTO.getShifts(), saved);
+
+        return toDTO(saved);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'OWNER', 'MANAGER')")
+    public List<String> validate(CreateScheduleDTO createScheduleDTO) {
+        return scheduleValidator.validate(createScheduleDTO.getShifts(), createScheduleDTO);
+    }
+
+    private float calculateWorkingHoursTarget(CreateScheduleDTO dto) {
+        HolidayManager holidayManager = HolidayManager.getInstance(ManagerParameters.create(HolidayCalendar.POLAND));
+        long workingDays = dto.getWeekStart().toLocalDate()
+                .datesUntil(dto.getWeekEnd().toLocalDate())
+                .filter(d -> d.getDayOfWeek() != DayOfWeek.SATURDAY)
+                .filter(d -> d.getDayOfWeek() != DayOfWeek.SUNDAY)
+                .filter(d -> !holidayManager.isHoliday(d))
+                .count();
+        return (float) workingDays * 8;
+    }
+
+    private void saveShiftsAndWorkingHours(List<CreateShiftDTO> shiftDTOS, Schedule saved) {
         shiftDTOS.stream()
                 .map(CreateShiftDTO::getUserId)
                 .distinct()
@@ -92,34 +123,17 @@ public class ScheduleCommandService {
                 });
 
         shiftDTOS.forEach(s -> s.setScheduleId(saved.getId()));
-
-        shiftDTOS.stream()
-                .map(shiftService::createShift)
-                .toList();
-
-        return createScheduleDTO(saved);
+        shiftDTOS.stream().map(shiftService::createShift).toList();
     }
 
-    public ResponseEntity<Void> deleteSchedule(Long id) {
-        Schedule sch = scheduleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Schedule not found"));
-        sch.setStatus(ScheduleStatus.ARCHIVED);
-        scheduleRepository.save(sch);
-        return ResponseEntity.noContent().build();
-    }
-
-
-    public List<String> validate(CreateScheduleDTO createScheduleDTO) {
-        return scheduleValidator.validate(createScheduleDTO.getShifts(), createScheduleDTO);
-    }
-
-
-    private ScheduleDTO createScheduleDTO (Schedule schedule) {
+    private ScheduleDTO toDTO(Schedule schedule) {
         ScheduleDTO dto = new ScheduleDTO();
         dto.setId(schedule.getId());
         dto.setWeekStart(schedule.getWeekStart());
         dto.setWeekEnd(schedule.getWeekEnd());
         dto.setCreatedBy_id(schedule.getCreatedBy_id().getId());
+        dto.setStatus(schedule.getStatus());
+        dto.setOrganizationId(schedule.getOrganization().getId());
         return dto;
     }
 
