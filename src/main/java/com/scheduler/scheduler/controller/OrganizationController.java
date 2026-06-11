@@ -22,22 +22,22 @@ public class OrganizationController {
         return organizationService.getOrganization(id);
     }
 
-    @GetMapping("/all")
-    public List<OrganizationDTO> getAllOrganizations() {
+    @GetMapping()
+    public List<OrganizationDTO> getAllOwnerOrganizations(
+            @RequestParam(required = false) Long ownerId,
+            @RequestParam(required = false) Boolean active) {
+        if (ownerId != null && active != null) {
+            return organizationService.getAllOwnerOrganizations(active, ownerId);
+        }
         return organizationService.getAllOrganizations();
     }
 
-    @GetMapping("/all/{ownerId}/{active}")
-    public List<OrganizationDTO> getAllOwnerOrganizations(@PathVariable Long ownerId, @PathVariable boolean active) {
-        return organizationService.getAllOwnerOrganizations(active, ownerId);
-    }
-
-    @PostMapping("/create")
+    @PostMapping()
     public OrganizationDTO createOrganization(@RequestBody CreateOrganizationDTO organization) {
         return organizationService.createOrganization(organization);
     }
 
-    @PostMapping("/archive/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> archiveOrganization(@PathVariable Long id) {
         return organizationService.archiveOrganization(id);
     }

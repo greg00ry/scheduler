@@ -7,7 +7,6 @@ import com.scheduler.scheduler.dto.schedule.ScheduleDTO;
 import com.scheduler.scheduler.dto.shift.ShiftDTO;
 import com.scheduler.scheduler.service.schedule.ScheduleCommandService;
 
-import com.scheduler.scheduler.service.schedule.ScheduleQueryService;
 import com.scheduler.scheduler.service.schedule.ScheduleRoutingService;
 import com.scheduler.scheduler.service.shift.ShiftService;
 import jakarta.validation.Valid;
@@ -40,10 +39,6 @@ public class ScheduleController {
         return ResponseEntity.ok(scheduleRoutingService.routeToGetAllSchedules(authentication));
     }
 
-    @GetMapping("/shift/{id}")
-    public ResponseEntity<ShiftDTO> getShift(@PathVariable @Positive Long id) {
-        return ResponseEntity.ok(shiftService.getShift(id));
-    }
 
     @GetMapping("/shift/all")
     public ResponseEntity<List<ShiftDTO>> getAllShifts() {
@@ -60,7 +55,7 @@ public class ScheduleController {
         return ResponseEntity.status(201).body(scheduleService.createSchedule(schedule));
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ScheduleDTO> update(@PathVariable @Positive Long id, @RequestBody @Valid CreateScheduleDTO schedule) {
         return ResponseEntity.ok(scheduleService.updateSchedule(id, schedule));
     }

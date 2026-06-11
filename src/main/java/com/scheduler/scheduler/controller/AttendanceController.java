@@ -19,8 +19,8 @@ public class AttendanceController {
     private final AttendanceService attendanceService;
 
     @GetMapping()
-    public ResponseEntity<List<AttendanceDTO>> getAttendance(@RequestParam @Positive Long id) {
-        return ResponseEntity.ok(attendanceService.getAttendanceByUser(id));
+    public ResponseEntity<List<AttendanceDTO>> getAttendance(@RequestParam @Positive Long userId) {
+        return ResponseEntity.ok(attendanceService.getAttendanceByUser(userId));
     }
 
     @PostMapping()
