@@ -35,7 +35,7 @@ public class ScheduleController {
         return ResponseEntity.ok(scheduleRoutingService.routeToGetSchedule(id, authentication));
     }
 
-    @GetMapping("/all")
+    @GetMapping()
     public ResponseEntity<List<ScheduleDTO>> getAllSchedules(Authentication authentication) {
         return ResponseEntity.ok(scheduleRoutingService.routeToGetAllSchedules(authentication));
     }
@@ -60,9 +60,9 @@ public class ScheduleController {
         return ResponseEntity.status(201).body(scheduleService.createSchedule(schedule));
     }
 
-    @PutMapping()
-    public ResponseEntity<ScheduleDTO> update(@RequestBody @Valid CreateScheduleDTO schedule) {
-        return ResponseEntity.ok(scheduleService.updateSchedule(schedule));
+    @PutMapping("{id}")
+    public ResponseEntity<ScheduleDTO> update(@PathVariable @Positive Long id, @RequestBody @Valid CreateScheduleDTO schedule) {
+        return ResponseEntity.ok(scheduleService.updateSchedule(id, schedule));
     }
 
     @PostMapping("/validate")

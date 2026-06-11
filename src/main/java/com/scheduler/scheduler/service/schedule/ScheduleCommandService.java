@@ -71,13 +71,13 @@ public class ScheduleCommandService {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'OWNER', 'MANAGER')")
     @Transactional
-    public ScheduleDTO updateSchedule(CreateScheduleDTO createScheduleDTO) {
+    public ScheduleDTO updateSchedule( Long id, CreateScheduleDTO createScheduleDTO) {
         List<String> violations = validate(createScheduleDTO);
         if (!violations.isEmpty()) {
             throw new RuntimeException("Schedule validation failed: " + violations);
         }
 
-        Schedule schedule = scheduleRepository.findById(createScheduleDTO.getId())
+        Schedule schedule = scheduleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Schedule not found"));
         schedule.setWeekStart(createScheduleDTO.getWeekStart());
         schedule.setWeekEnd(createScheduleDTO.getWeekEnd());

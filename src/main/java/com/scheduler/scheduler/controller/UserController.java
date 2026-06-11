@@ -52,14 +52,14 @@ public class UserController {
         return ResponseEntity.status(201).body(userService.createUser(employee));
     }
 
-    @PutMapping("/rfid")
-    public ResponseEntity<UserDTO> createWithRFID(@RequestBody @Valid AssignRFIDDTO employee) {
-        return ResponseEntity.ok(userService.assignRFIDToUser(employee.getRfid(), employee.getId()));
+    @PatchMapping("/{id}/rfid")
+    public ResponseEntity<UserDTO> createWithRFID(@PathVariable @Positive Long id,@RequestBody @Valid AssignRFIDDTO rfidDto) {
+        return ResponseEntity.ok(userService.assignRFIDToUser(rfidDto.getRfid(), id));
     }
 
-    @PutMapping()
-    public ResponseEntity<UserDTO> update(@RequestBody @Valid UpdateUserDTO updateUserDTO) {
-        return ResponseEntity.ok(userService.updateUser(updateUserDTO));
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDTO> update(@PathVariable @Positive Long id, @RequestBody @Valid UpdateUserDTO updateUserDTO) {
+        return ResponseEntity.ok(userService.updateUser(id, updateUserDTO));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser (@PathVariable @Positive Long id) {
@@ -73,3 +73,4 @@ public class UserController {
 //TODO: easy company chat
 //TODO: register endpoint
 //TODO: blockchain to saved schedule to ensure if nobody will delete old schedules
+//TODO: validation in UpdateUserDTO

@@ -2,10 +2,15 @@ package com.scheduler.scheduler.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
 
 
 import java.util.List;
 
+@FilterDef(name = "organizationFilter", parameters = @ParamDef(name = "orgId", type = Long.class))
+@Filter(name = "organizationFilter", condition = "organization_id = :orgId")
 @Data
 @Table(name = "users")
 @Entity

@@ -8,8 +8,6 @@ import lombok.Data;
 
 @Data
 public class AssignRFIDDTO {
-    @NotNull
-    private Long id;
     @NotBlank
     @Size(min = 10, max = 10)
     @Pattern(regexp = "\\d{10}")
