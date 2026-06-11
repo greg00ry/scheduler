@@ -20,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.scheduler.scheduler.service.user.UserQueryService.getUserDetailsDTO;
+
 
 @Service
 @RequiredArgsConstructor
@@ -29,19 +31,7 @@ public class UserService {
 
 
 
-    public UserDTO getUser(Long id) {
 
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        UserDTO dto = new UserDTO();
-        dto.setId(user.getId());
-        dto.setFirstName(user.getFirstName());
-        dto.setLastName(user.getLastName());
-        dto.setRole(user.getRole());
-
-        return dto;
-    }
 
     public List<UserDTO> getAllUser() {
         return userRepository.findAll().stream()
@@ -58,42 +48,7 @@ public class UserService {
                 .map(this::createUserDTO).toList();
     }
     public UserDetailsDTO getUserDetails(Long id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        UserDetailsDTO dto = new UserDetailsDTO();
-        dto.setId(user.getId());
-        dto.setFirstName(user.getFirstName());
-        dto.setLastName(user.getLastName());
-        dto.setRole(user.getRole());
-
-        dto.setAbsences(user.getAbsenceList().stream()
-                .map(a -> {
-                    AbsenceDTO absenceDTO = new AbsenceDTO();
-                    absenceDTO.setId(a.getId());
-                    absenceDTO.setReason(a.getReason());
-
-                    ShiftDTO shiftDTO = new ShiftDTO();
-                    shiftDTO.setId(a.getShift().getId());
-                    shiftDTO.setDate(a.getShift().getDate());
-                    shiftDTO.setStartTime(a.getShift().getStartTime());
-                    shiftDTO.setEndTime(a.getShift().getEndTime());
-
-                    absenceDTO.setShift(shiftDTO);
-
-                    return absenceDTO;
-                }).toList());
-
-        dto.setWorkingHoursList(user.getWorkingHoursList().stream()
-                .map(w -> {
-                    WorkingHoursDTO workingHoursDTO = new WorkingHoursDTO();
-                    workingHoursDTO.setId(w.getId());
-                    workingHoursDTO.setTotalHours(w.getTotalHours());
-                    workingHoursDTO.setOvertimeHours(w.getOvertimeHours());
-                    return workingHoursDTO;
-                }).toList());
-
-        return dto;
+        return getUserDetailsDTO(id, userRepository);
     }
 
 

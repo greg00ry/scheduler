@@ -60,6 +60,11 @@ public class ScheduleController {
         return ResponseEntity.ok(scheduleService.updateSchedule(id, schedule));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable @Positive Long id) {
+        return scheduleService.deleteSchedule(id);
+    }
+
     @PostMapping("/validate")
     public ResponseEntity<List<String>> validate(@RequestBody @Valid CreateScheduleDTO schedule) {
         List<String> violations = scheduleService.validate(schedule);

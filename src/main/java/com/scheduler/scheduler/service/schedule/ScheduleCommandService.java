@@ -17,7 +17,7 @@ import de.focus_shift.jollyday.core.HolidayManager;
 import de.focus_shift.jollyday.core.ManagerParameters;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import com.scheduler.scheduler.security.annotation.ManagerAdminOwnerOnly;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +35,7 @@ public class ScheduleCommandService {
     private final OrganizationRepository organizationRepository;
 
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'OWNER', 'MANAGER')")
+    @ManagerAdminOwnerOnly
     @Transactional
     public ScheduleDTO createSchedule(CreateScheduleDTO createScheduleDTO) {
         List<String> violations = validate(createScheduleDTO);
@@ -59,7 +59,7 @@ public class ScheduleCommandService {
         return toDTO(saved);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'OWNER', 'MANAGER')")
+    @ManagerAdminOwnerOnly
     @Transactional
     public ResponseEntity<Void> deleteSchedule(Long id) {
         Schedule sch = scheduleRepository.findById(id)
@@ -69,7 +69,7 @@ public class ScheduleCommandService {
         return ResponseEntity.noContent().build();
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'OWNER', 'MANAGER')")
+    @ManagerAdminOwnerOnly
     @Transactional
     public ScheduleDTO updateSchedule( Long id, CreateScheduleDTO createScheduleDTO) {
         List<String> violations = validate(createScheduleDTO);
@@ -93,7 +93,7 @@ public class ScheduleCommandService {
         return toDTO(saved);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'OWNER', 'MANAGER')")
+    @ManagerAdminOwnerOnly
     public List<String> validate(CreateScheduleDTO createScheduleDTO) {
         return scheduleValidator.validate(createScheduleDTO.getShifts(), createScheduleDTO);
     }

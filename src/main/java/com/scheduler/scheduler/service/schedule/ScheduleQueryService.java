@@ -4,8 +4,9 @@ import com.scheduler.scheduler.aop.SkipOrganizationFilter;
 import com.scheduler.scheduler.dto.schedule.ScheduleDTO;
 import com.scheduler.scheduler.model.Schedule;
 import com.scheduler.scheduler.repository.ScheduleRepository;
+import com.scheduler.scheduler.security.annotation.AdminOnly;
+import com.scheduler.scheduler.security.annotation.ManagerEmployeeOwnerOnly;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class ScheduleQueryService {
 
     private final ScheduleRepository scheduleRepository;
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @AdminOnly
     @SkipOrganizationFilter
     public ScheduleDTO getSchedule(Long id) {
         Schedule schedule = scheduleRepository.findById(id)
@@ -24,20 +25,20 @@ public class ScheduleQueryService {
         return toDTO((schedule));
     }
 
-    @PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE', 'OWNER')")
+    @ManagerEmployeeOwnerOnly
     public ScheduleDTO getScheduleForManagerAndEmployee(Long id) {
         Schedule schedule = scheduleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Schedule not found"));
         return toDTO((schedule));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @AdminOnly
     public List<ScheduleDTO> getAllSchedules() {
         return scheduleRepository.findAll().stream()
                 .map(this::toDTO).toList();
     }
 
-    @PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE', 'OWNER')")
+    @ManagerEmployeeOwnerOnly
     public List<ScheduleDTO> getAllSchedulesForManagerAndEmployee() {
         return scheduleRepository.findAll().stream()
                 .map(this::toDTO).toList();
