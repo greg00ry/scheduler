@@ -5,6 +5,7 @@ import com.scheduler.scheduler.dto.availability.CreateAvailabilityDTO;
 import com.scheduler.scheduler.model.Availability;
 import com.scheduler.scheduler.repository.AvailabilityRepository;
 import com.scheduler.scheduler.repository.UserRepository;
+import com.scheduler.scheduler.security.annotation.ManagerEmployeeOwnerOnly;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class AvailabilityService {
     private final AvailabilityRepository availabilityRepository;
     private final UserRepository userRepository;
 
-
+    @ManagerEmployeeOwnerOnly
     @Transactional
     public CreateAvailabilityDTO createAvailability (CreateAvailabilityDTO createAvailabilityDTO) {
         if (availabilityRepository.existsByUserAndDate(
@@ -37,6 +38,7 @@ public class AvailabilityService {
         return createAvailabilityDTO;
     }
 
+    @ManagerEmployeeOwnerOnly
     @Transactional
     public ResponseEntity<Void> deleteAvailability(Long id) {
         availabilityRepository.delete(availabilityRepository.findById(id)

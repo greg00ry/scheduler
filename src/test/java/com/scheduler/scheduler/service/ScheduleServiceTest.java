@@ -6,7 +6,7 @@ import com.scheduler.scheduler.model.User;
 import com.scheduler.scheduler.repository.ScheduleRepository;
 import com.scheduler.scheduler.service.schedule.ScheduleCommandService;
 import com.scheduler.scheduler.service.schedule.ScheduleQueryService;
-import com.scheduler.scheduler.service.user.UserService;
+import com.scheduler.scheduler.service.user.UserCommandService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,7 +26,7 @@ public class ScheduleServiceTest {
     @InjectMocks
     private ScheduleCommandService scheduleService;
     @Mock
-    private UserService userService;
+    private UserCommandService userService;
     @InjectMocks
     private ScheduleQueryService scheduleQueryService;
 

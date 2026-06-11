@@ -6,7 +6,7 @@ import com.scheduler.scheduler.exception.ExistingUserException;
 import com.scheduler.scheduler.model.Role;
 import com.scheduler.scheduler.model.User;
 import com.scheduler.scheduler.repository.UserRepository;
-import com.scheduler.scheduler.service.user.UserService;
+import com.scheduler.scheduler.service.user.UserCommandService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -27,7 +27,7 @@ public class UserServiceTest {
     @Mock
     private UserRepository userRepository;
     @InjectMocks
-    private UserService userService;
+    private UserCommandService userService;
     @Mock
     private PasswordEncoder passwordEncoder;
 

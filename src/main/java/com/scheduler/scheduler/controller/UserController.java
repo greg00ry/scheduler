@@ -6,7 +6,7 @@ import com.scheduler.scheduler.dto.user.UpdateUserDTO;
 import com.scheduler.scheduler.dto.user.UserDTO;
 import com.scheduler.scheduler.dto.user.UserDetailsDTO;
 import com.scheduler.scheduler.model.Role;
-import com.scheduler.scheduler.service.user.UserService;
+import com.scheduler.scheduler.service.user.UserCommandService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+    private final UserCommandService userService;
 
 
 

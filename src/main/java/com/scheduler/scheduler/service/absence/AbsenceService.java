@@ -7,6 +7,8 @@ import com.scheduler.scheduler.model.Absence;
 import com.scheduler.scheduler.repository.AbsenceRepository;
 import com.scheduler.scheduler.repository.ShiftRepository;
 import com.scheduler.scheduler.repository.UserRepository;
+import com.scheduler.scheduler.security.annotation.ManagerEmployeeOwnerOnly;
+import com.scheduler.scheduler.security.annotation.ManagerOwnerOnly;
 import com.scheduler.scheduler.service.shift.ShiftService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ public class AbsenceService {
 
 
     @Transactional
+    @ManagerEmployeeOwnerOnly
     public AbsenceDTO createAbsence(CreateAbsenceDTO createAbsenceDTO) {
 
         if (absenceRepository.existsByShiftAndUser(shiftRepository.findById(createAbsenceDTO.getShiftId())
@@ -36,7 +39,7 @@ public class AbsenceService {
         Absence absence = new Absence();
         absence.setUser(userRepository.findById(createAbsenceDTO.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found")));
-        absence.setShift(shiftRepository.findById(createAbsenceDTO.getUserId())
+        absence.setShift(shiftRepository.findById(createAbsenceDTO.getShiftId())
                 .orElseThrow(() -> new RuntimeException("Shift not found")));
         absence.setReason(createAbsenceDTO.getReason());
         absence.setReportedAt(createAbsenceDTO.getReportedAt());
@@ -58,6 +61,7 @@ public class AbsenceService {
     }
 
     @Transactional
+    @ManagerEmployeeOwnerOnly
     public ResponseEntity<Void> deleteAbsence(Long id) {
         absenceRepository.delete(absenceRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Absence not found")));

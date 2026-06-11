@@ -57,13 +57,13 @@ public class UserQueryService {
 
     @AdminOnly
     @SkipOrganizationFilter
-    public List<UserDTO> getAllUser() {
+    public List<UserDTO> getAllUsers() {
         return userRepository.findAll().stream()
                 .map(this::createUserDTO).toList();
     }
 
     @ManagerOwnerOnly
-    public List<UserDTO> getAllUserForManager() {
+    public List<UserDTO> getAllUsersForManager() {
         return userRepository.findAll().stream()
                 .map(this::createUserDTO).toList();
     }

@@ -21,6 +21,7 @@ public class AttendanceService {
     private final AttendanceRepository attendanceRepository;
     private final UserRepository userRepository;
 
+
     public List<AttendanceDTO> getAttendanceByUser(Long userId) {
         return attendanceRepository.findAllByUser_Id(userId).stream()
                 .map(this::createAttendanceDTO).toList();

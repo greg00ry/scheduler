@@ -7,8 +7,10 @@ import com.scheduler.scheduler.model.Shift;
 import com.scheduler.scheduler.repository.ScheduleRepository;
 import com.scheduler.scheduler.repository.ShiftRepository;
 import com.scheduler.scheduler.repository.UserRepository;
+import com.scheduler.scheduler.security.annotation.ManagerEmployeeOwnerOnly;
+import com.scheduler.scheduler.security.annotation.ManagerOwnerOnly;
 import com.scheduler.scheduler.service.workinghours.WorkingHoursService;
-import com.scheduler.scheduler.service.user.UserService;
+import com.scheduler.scheduler.service.user.UserCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ShiftService {
     private final ShiftRepository shiftRepository;
-    private final UserService userService;
+    private final UserCommandService userService;
     private final UserRepository userRepository;
     private final ScheduleRepository scheduleRepository;
     private final WorkingHoursService workingHoursService;
@@ -36,12 +38,13 @@ public class ShiftService {
         return shiftRepository.findAll().stream()
                 .map(this::createShiftDTO).toList();
     }
-
+    @ManagerEmployeeOwnerOnly
     public List<ShiftDTO> getShiftsByScheduleId(Long id) {
         return shiftRepository.getShiftsBySchedule_Id(id).stream()
                 .map(this::createShiftDTO).toList();
     }
 
+    @ManagerOwnerOnly
     public ShiftDTO createShift (CreateShiftDTO createShiftDTO) {
         Shift shift = new Shift();
         shift.setUser(userRepository.findById(createShiftDTO.getUserId())

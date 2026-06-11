@@ -17,7 +17,7 @@ import de.focus_shift.jollyday.core.HolidayManager;
 import de.focus_shift.jollyday.core.ManagerParameters;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import com.scheduler.scheduler.security.annotation.ManagerAdminOwnerOnly;
+import com.scheduler.scheduler.security.annotation.ManagerOwnerOnly;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +35,7 @@ public class ScheduleCommandService {
     private final OrganizationRepository organizationRepository;
 
 
-    @ManagerAdminOwnerOnly
+    @ManagerOwnerOnly
     @Transactional
     public ScheduleDTO createSchedule(CreateScheduleDTO createScheduleDTO) {
         List<String> violations = validate(createScheduleDTO);
@@ -59,7 +59,7 @@ public class ScheduleCommandService {
         return toDTO(saved);
     }
 
-    @ManagerAdminOwnerOnly
+    @ManagerOwnerOnly
     @Transactional
     public ResponseEntity<Void> deleteSchedule(Long id) {
         Schedule sch = scheduleRepository.findById(id)
@@ -69,7 +69,7 @@ public class ScheduleCommandService {
         return ResponseEntity.noContent().build();
     }
 
-    @ManagerAdminOwnerOnly
+    @ManagerOwnerOnly
     @Transactional
     public ScheduleDTO updateSchedule( Long id, CreateScheduleDTO createScheduleDTO) {
         List<String> violations = validate(createScheduleDTO);
@@ -93,7 +93,7 @@ public class ScheduleCommandService {
         return toDTO(saved);
     }
 
-    @ManagerAdminOwnerOnly
+    @ManagerOwnerOnly
     public List<String> validate(CreateScheduleDTO createScheduleDTO) {
         return scheduleValidator.validate(createScheduleDTO.getShifts(), createScheduleDTO);
     }
