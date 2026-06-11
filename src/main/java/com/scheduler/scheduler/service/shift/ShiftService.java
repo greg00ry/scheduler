@@ -68,7 +68,7 @@ public class ShiftService {
     public ShiftDTO createShiftDTO (Shift shift) {
         ShiftDTO dto = new ShiftDTO();
         dto.setId(shift.getId());
-        dto.setUserDTO(userService.getUser(shift.getUser().getId()));
+        dto.setUserId(shift.getUser().getId());
         dto.setDate(shift.getDate());
         dto.setStartTime(shift.getStartTime());
         dto.setEndTime(shift.getEndTime());

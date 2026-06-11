@@ -11,7 +11,7 @@ public class ShiftDTO {
     @NotNull
     private Long id;
     @NotNull
-    private UserDTO userDTO;
+    private Long userId;
     @NotNull
     private LocalDateTime date;
     @NotNull

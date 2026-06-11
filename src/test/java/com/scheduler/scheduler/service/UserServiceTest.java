@@ -14,7 +14,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,47 +29,6 @@ public class UserServiceTest {
     private UserCommandService userService;
     @Mock
     private PasswordEncoder passwordEncoder;
-
-    @Test
-    void getUser_shouldReturnUserDTO_whenUserExists() {
-        //given
-
-        User user = TestDataFactory.createUser(1L, "Jan", "Kowalski", Role.EMPLOYEE);
-
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-
-        //when
-        UserDTO result = userService.getUser(1L);
-
-        //then
-        assertThat(result.getId()).isEqualTo(1L);
-        assertThat(result.getFirstName()).isEqualTo("Jan");
-    }
-
-    @Test
-    void getUser_shouldThrowWhenNotExist() {
-        //given
-        when(userRepository.findById(2L)).thenReturn(Optional.empty());
-
-
-
-        //then
-        assertThatThrownBy(() -> userService.getUser(2L)).isInstanceOf(RuntimeException.class);
-    }
-
-    @Test
-    void getAllUsers_shouldReturnListOfUsersDTO_WhenUsersExists() {
-        //given
-        List<User> users = TestDataFactory.createManyUsers();
-
-        when(userRepository.findAll()).thenReturn(users);
-
-        //when
-        List <UserDTO> result = userService.getAllUser();
-
-        //then
-        assertThat(result).hasSize(users.size());
-    }
 
     @Test
     void createUser_shouldReturnUserDTO_whenEmailIsUnique() {
