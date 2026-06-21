@@ -1,6 +1,7 @@
 package com.scheduler.scheduler.service;
 
 import com.scheduler.scheduler.dto.schedule.ScheduleDTO;
+import com.scheduler.scheduler.model.Organization;
 import com.scheduler.scheduler.model.Schedule;
 import com.scheduler.scheduler.model.User;
 import com.scheduler.scheduler.repository.ScheduleRepository;
@@ -38,6 +39,9 @@ public class ScheduleServiceTest {
         User user = new User();
         user.setId(1L);
         schedule.setCreatedBy_id(user);
+        Organization org = new Organization();
+        org.setId(1L);
+        schedule.setOrganization(org);
 
         when(scheduleRepository.findById(1L)).thenReturn(Optional.of(schedule));
         //when

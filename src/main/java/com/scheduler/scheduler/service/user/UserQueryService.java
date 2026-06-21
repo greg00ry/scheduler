@@ -150,7 +150,7 @@ public class UserQueryService {
         return dto;
     }
 
-    private UserDTO createUserDTO(User user) {
+    public UserDTO createUserDTO(User user) {
         UserDTO dto = new UserDTO();
         dto.setId(user.getId());
         dto.setFirstName(user.getFirstName());

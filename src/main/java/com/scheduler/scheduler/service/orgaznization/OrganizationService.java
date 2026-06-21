@@ -5,6 +5,8 @@ import com.scheduler.scheduler.dto.organization.OrganizationDTO;
 import com.scheduler.scheduler.model.Organization;
 import com.scheduler.scheduler.repository.OrganizationRepository;
 import com.scheduler.scheduler.repository.UserRepository;
+import com.scheduler.scheduler.security.annotation.AdminOnly;
+import com.scheduler.scheduler.security.annotation.ManagerOwnerOnly;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ public class OrganizationService {
     private final OrganizationRepository organizationRepository;
     private final UserRepository userRepository;
 
+    @ManagerOwnerOnly
     public OrganizationDTO getOrganization(Long id) {
         Organization organization = organizationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Organization not found"));
@@ -27,6 +30,7 @@ public class OrganizationService {
         dto.setOwnerId(organization.getOwner().getId());
         return dto;
     }
+    @AdminOnly
     public List<OrganizationDTO> getAllOrganizations() {
         List<Organization> organizations = organizationRepository.findAll();
         return organizations.stream()
@@ -38,6 +42,7 @@ public class OrganizationService {
                     return dto;
                 }).toList();
     }
+    @ManagerOwnerOnly
     public List<OrganizationDTO> getAllOwnerOrganizations(boolean isActive, Long ownerId) {
         List<Organization> organizations = organizationRepository.findAllByOwnerIdAndIsActive(ownerId, isActive);
         return organizations.stream()
@@ -49,6 +54,7 @@ public class OrganizationService {
                     return dto;
                 }).toList();
     }
+    @AdminOnly
     @Transactional
     public OrganizationDTO createOrganization(CreateOrganizationDTO createOrganizationDTO) {
         Organization organization = new Organization();
@@ -62,6 +68,7 @@ public class OrganizationService {
         dto.setOwnerId(organization.getOwner().getId());
         return dto;
     }
+    @AdminOnly
     @Transactional
     public ResponseEntity<Void> archiveOrganization(Long id) {
         Organization org = organizationRepository.findById(id)

@@ -78,3 +78,4 @@ public class UserController {
 //TODO: register endpoint
 //TODO: blockchain to saved schedule to ensure if nobody will delete old schedules
 //TODO: validation in UpdateUserDTO
+//TODO: walidacja dla grafiku tworzonego wstecz

@@ -18,20 +18,21 @@ public class WorkingHoursService {
 
 
 
-    public void calculateHours (User user, Shift shift, Schedule schedule) {
-        WorkingHours workingHours = workingHoursRepository.getByUser_IdAndSchedule_Id(user.getId(), schedule.getId());
+    public void calculateHours(User user, Shift shift, Schedule schedule) {
+        WorkingHours workingHours = workingHoursRepository.findByUser_IdAndSchedule_Id(user.getId(), schedule.getId())
+                .orElseThrow(() -> new RuntimeException("WorkingHours not found for user " + user.getId() + " in schedule " + schedule.getId()));
 
         Duration period = Duration.between(shift.getStartTime(), shift.getEndTime());
 
         workingHours.setTotalHours(workingHours.getTotalHours() + period.toMinutes() / 60f);
         workingHoursRepository.save(workingHours);
     }
+
     public void calculateOvertime(Schedule schedule, User user) {
-        WorkingHours workingHours = workingHoursRepository.getByUser_IdAndSchedule_Id(user.getId(), schedule.getId());
+        WorkingHours workingHours = workingHoursRepository.findByUser_IdAndSchedule_Id(user.getId(), schedule.getId())
+                .orElseThrow(() -> new RuntimeException("WorkingHours not found for user " + user.getId() + " in schedule " + schedule.getId()));
 
         workingHours.setOvertimeHours(workingHours.getTotalHours() - schedule.getWorkingHoursTarget());
-
         workingHoursRepository.save(workingHours);
-
     }
 }

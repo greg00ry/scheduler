@@ -31,7 +31,7 @@ public class UserQueryServiceTest {
         User user = TestDataFactory.createUser(1L, "Jan", "Kowalski", Role.EMPLOYEE);
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
-        UserDTO result = UserQueryService.getUserDTO(1L, userRepository);
+        UserDTO result = userQueryService.getUser(1L);
 
         assertThat(result.getId()).isEqualTo(1L);
         assertThat(result.getFirstName()).isEqualTo("Jan");
@@ -41,7 +41,7 @@ public class UserQueryServiceTest {
     void getUser_shouldThrowWhenNotExist() {
         when(userRepository.findById(2L)).thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> UserQueryService.getUserDTO(2L, userRepository))
+        assertThatThrownBy(() -> userQueryService.getUser(2L))
                 .isInstanceOf(RuntimeException.class);
     }
 
