@@ -8,7 +8,7 @@ import com.scheduler.scheduler.model.Availability;
 import com.scheduler.scheduler.repository.AbsenceRepository;
 import com.scheduler.scheduler.repository.AvailabilityRepository;
 import com.scheduler.scheduler.service.schedule.ScheduleValidator;
-import com.scheduler.scheduler.service.schedule.ValidationResult;
+import com.scheduler.scheduler.dto.schedule.ValidationResult;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
