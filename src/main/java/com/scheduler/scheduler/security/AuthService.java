@@ -20,11 +20,10 @@ public class AuthService {
     }
 
     public ResponseEntity<String> login(LoginDTO loginDTO) {
-        User user = userRepository.findByEmail(loginDTO.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        if (!passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
+        User user = userRepository.findByEmail(loginDTO.getEmail()).orElse(null);
+        if (user == null || !passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
             return ResponseEntity.status(401).body("Invalid credentials");
         }
-        return ResponseEntity.ok((jwtService.generateToken(user.getEmail(), user.getId(), user.getRole().toString())));
+        return ResponseEntity.ok(jwtService.generateToken(user.getEmail(), user.getId(), user.getRole().toString()));
     }
 }
