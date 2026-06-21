@@ -1,0 +1,73 @@
+package com.scheduler.scheduler.service.absence;
+
+import com.scheduler.scheduler.dto.absence.AbsenceDTO;
+import com.scheduler.scheduler.dto.absence.CreateAbsenceDTO;
+import com.scheduler.scheduler.dto.shift.ShiftDTO;
+import com.scheduler.scheduler.model.Absence;
+import com.scheduler.scheduler.repository.AbsenceRepository;
+import com.scheduler.scheduler.repository.ShiftRepository;
+import com.scheduler.scheduler.repository.UserRepository;
+import com.scheduler.scheduler.security.annotation.ManagerEmployeeOwnerOnly;
+import com.scheduler.scheduler.security.annotation.ManagerOwnerOnly;
+import com.scheduler.scheduler.service.shift.ShiftService;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class AbsenceService {
+    private final AbsenceRepository absenceRepository;
+    private final UserRepository userRepository;
+    private final ShiftRepository shiftRepository;
+    private final ShiftService shiftService;
+
+
+    @Transactional
+    @ManagerEmployeeOwnerOnly
+    public AbsenceDTO createAbsence(CreateAbsenceDTO createAbsenceDTO) {
+
+        if (absenceRepository.existsByShiftAndUser(shiftRepository.findById(createAbsenceDTO.getShiftId())
+                .orElseThrow(),
+                userRepository.findById(createAbsenceDTO.getUserId())
+                        .orElseThrow())) {
+            throw new RuntimeException("Absence already exists");
+        }
+
+
+        Absence absence = new Absence();
+        absence.setUser(userRepository.findById(createAbsenceDTO.getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found")));
+        absence.setShift(shiftRepository.findById(createAbsenceDTO.getShiftId())
+                .orElseThrow(() -> new RuntimeException("Shift not found")));
+        absence.setReason(createAbsenceDTO.getReason());
+        absence.setReportedAt(createAbsenceDTO.getReportedAt());
+
+        Absence saved = absenceRepository.save(absence);
+
+        AbsenceDTO dto = new AbsenceDTO();
+
+        ShiftDTO shiftDTO = shiftService.createShiftDTO(saved.getShift());
+
+        dto.setId(saved.getId());
+        dto.setShift(shiftDTO);
+        dto.setReason(saved.getReason());
+        dto.setReportedAt(saved.getReportedAt());
+
+
+
+        return dto;
+    }
+
+    @Transactional
+    @ManagerEmployeeOwnerOnly
+    public ResponseEntity<Void> deleteAbsence(Long id) {
+        absenceRepository.delete(absenceRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Absence not found")));
+        return ResponseEntity.noContent().build();
+    }
+
+
+
+}

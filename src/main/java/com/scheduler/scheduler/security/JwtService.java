@@ -47,6 +47,14 @@ public class JwtService {
                 .getBody()
                 .get("role", String.class);
     }
+    public Long extractId(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("id", Long.class);
+    }
     public boolean isTokenValid(String token) {
         try {
             Jwts.parserBuilder()

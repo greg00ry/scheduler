@@ -1,30 +1,30 @@
 package com.scheduler.scheduler.controller;
 
-import com.scheduler.scheduler.dto.AttendanceDTO;
-import com.scheduler.scheduler.model.Attendance;
-import com.scheduler.scheduler.service.AttendanceService;
+import com.scheduler.scheduler.dto.rfid.AttendanceDTO;
+import com.scheduler.scheduler.service.attendance.AttendanceService;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/api/attendance")
 @RequiredArgsConstructor
 public class AttendanceController {
     private final AttendanceService attendanceService;
 
-    @GetMapping("/{id}")
-    public List<AttendanceDTO> getAttendance(@PathVariable Long id) {
-        return attendanceService.getAttendanceByUser(id);
+    @GetMapping()
+    public ResponseEntity<List<AttendanceDTO>> getAttendance(@RequestParam @Positive Long userId) {
+        return ResponseEntity.ok(attendanceService.getAttendanceByUser(userId));
     }
 
     @PostMapping()
     public ResponseEntity<String> createAttendance(@RequestBody String rfid) {
-        if (rfid.length() != 10) {
-            return ResponseEntity.badRequest().body("Invalid RFID length");
-        }
         return attendanceService.markAttendance(rfid);
     }
 }

@@ -1,6 +1,6 @@
 package com.scheduler.scheduler.controller;
 
-import com.scheduler.scheduler.dto.LoginDTO;
+import com.scheduler.scheduler.dto.auth.LoginDTO;
 import com.scheduler.scheduler.security.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

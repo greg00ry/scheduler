@@ -1,6 +1,6 @@
 package com.scheduler.scheduler.security;
 
-import com.scheduler.scheduler.dto.LoginDTO;
+import com.scheduler.scheduler.dto.auth.LoginDTO;
 import com.scheduler.scheduler.model.User;
 import com.scheduler.scheduler.repository.UserRepository;
 import org.springframework.http.ResponseEntity;

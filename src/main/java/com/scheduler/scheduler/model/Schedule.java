@@ -2,10 +2,15 @@ package com.scheduler.scheduler.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@FilterDef(name = "organizationFilter", parameters = @ParamDef(name = "orgId", type = Long.class))
+@Filter(name = "organizationFilter", condition = "organization_id = :orgId")
 @Data
 @Entity
 public class Schedule {
@@ -15,6 +20,11 @@ public class Schedule {
 
     private LocalDateTime weekStart;
     private LocalDateTime weekEnd;
+
+    private ScheduleStatus status;
+
+    @ManyToOne
+    private Organization organization;
 
     @OneToMany(mappedBy = "schedule")
     private List<Shift> shiftList;
