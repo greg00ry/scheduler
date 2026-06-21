@@ -17,8 +17,13 @@ public class Absence {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "shift_id")
+    @JoinColumn(name = "shift_id", nullable = true)
     private Shift shift;
+
+    private LocalDateTime startDate;
+    private LocalDateTime endTime;
+    private AbsenceType type;
+    private AbsenceStatus status;
 
     private String reason;
     private LocalDateTime reportedAt;
