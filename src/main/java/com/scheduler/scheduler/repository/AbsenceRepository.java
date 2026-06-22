@@ -13,7 +13,9 @@ import java.util.List;
 public interface AbsenceRepository extends JpaRepository<Absence, Long> {
     boolean existsByShiftAndUser(Shift shift, User user);
 
-    @Query
+    @Query("SELECT a FROM Absence a WHERE a.user.id = :userId " +
+            "AND a.status = com.scheduler.scheduler.model.AbsenceStatus.APPROVED " +
+            "AND a.startDate <= :date AND a.endDate >= :date")
     List<Absence> findApprovedLeaveForUserOnDate(Long id, LocalDateTime date);
 }
 

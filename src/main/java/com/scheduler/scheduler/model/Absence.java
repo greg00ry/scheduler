@@ -21,7 +21,7 @@ public class Absence {
     private Shift shift;
 
     private LocalDateTime startDate;
-    private LocalDateTime endTime;
+    private LocalDateTime endDate;
     private AbsenceType type;
     private AbsenceStatus status;
 

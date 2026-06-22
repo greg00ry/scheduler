@@ -1,7 +1,10 @@
 package com.scheduler.scheduler.service.schedule;
 
 import com.scheduler.scheduler.dto.schedule.CreateScheduleDTO;
+import com.scheduler.scheduler.dto.schedule.ValidationResult;
 import com.scheduler.scheduler.dto.shift.CreateShiftDTO;
+import com.scheduler.scheduler.repository.AbsenceRepository;
+import com.scheduler.scheduler.repository.AvailabilityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,12 +18,18 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class ScheduleValidator {
-        public List<String> validate(List<CreateShiftDTO> shifts, CreateScheduleDTO schedule) {
+
+    private final AvailabilityRepository availabilityRepository;
+
+    private final AbsenceRepository absenceRepository;
+
+    public ValidationResult validate(List<CreateShiftDTO> shifts, CreateScheduleDTO schedule) {
             List<String> violations = new ArrayList<>();
+            List<String> warnings = new ArrayList<>();
             DailyWorkHours(shifts, violations);
             WeeklyWorkHours(shifts, violations, schedule);
             MinRestBetweenShift(shifts, violations);
-            return violations;
+            return new ValidationResult(violations, warnings);
         }
 
         private void DailyWorkHours(List<CreateShiftDTO> shifts, List<String> violations) {
@@ -74,5 +83,16 @@ public class ScheduleValidator {
                         }
                     });
         }
+        private void validateScheduleDates () {}
+        private void validateShiftIntegrity() {}
+        private void validateNoOverlap() {}
+        private void validateDailyHours() {}
+        private void validateWeeklyHours() {}
+        private void validateDailyRest() {}
+        private void validateWeeklyRest() {}
+        private void validateHolidayWork() {}
+        private void validateNightWork() {}
+        private void validateAvailability() {}
+        private void validateLeaveRequest() {}
 
 }
