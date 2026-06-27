@@ -4,6 +4,7 @@ package com.scheduler.scheduler.controller;
 
 import com.scheduler.scheduler.dto.schedule.CreateScheduleDTO;
 import com.scheduler.scheduler.dto.schedule.ScheduleDTO;
+import com.scheduler.scheduler.dto.schedule.ValidationResult;
 import com.scheduler.scheduler.dto.shift.ShiftDTO;
 import com.scheduler.scheduler.service.schedule.ScheduleCommandService;
 
@@ -66,13 +67,14 @@ public class ScheduleController {
     }
 
     @PostMapping("/validate")
-    public ResponseEntity<List<String>> validate(@RequestBody @Valid CreateScheduleDTO schedule) {
-        List<String> violations = scheduleService.validate(schedule);
-        if (violations.isEmpty()) {
-            return ResponseEntity.ok(violations);
+    public ResponseEntity<ValidationResult> validate(@RequestBody @Valid CreateScheduleDTO schedule) {
+        ValidationResult result = scheduleService.validate(schedule);
+        if (result.violations().isEmpty()) {
+            return ResponseEntity.ok(result);
         }
-        return ResponseEntity.badRequest().body(violations);
+        return ResponseEntity.badRequest().body(result);
     }
+
 
 
 }

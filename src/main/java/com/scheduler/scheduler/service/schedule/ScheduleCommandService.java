@@ -1,6 +1,7 @@
 package com.scheduler.scheduler.service.schedule;
 
 import com.scheduler.scheduler.dto.schedule.CreateScheduleDTO;
+import com.scheduler.scheduler.dto.schedule.ValidationResult;
 import com.scheduler.scheduler.dto.shift.CreateShiftDTO;
 import com.scheduler.scheduler.dto.schedule.ScheduleDTO;
 import com.scheduler.scheduler.model.Schedule;
@@ -38,8 +39,8 @@ public class ScheduleCommandService {
     @ManagerOwnerOnly
     @Transactional
     public ScheduleDTO createSchedule(CreateScheduleDTO createScheduleDTO) {
-        List<String> violations = validate(createScheduleDTO);
-        if (!violations.isEmpty()) {
+        ValidationResult violations = validate(createScheduleDTO);
+        if (!violations.violations().isEmpty()) {
             throw new RuntimeException("Schedule validation failed: " + violations);
         }
 
@@ -72,8 +73,8 @@ public class ScheduleCommandService {
     @ManagerOwnerOnly
     @Transactional
     public ScheduleDTO updateSchedule( Long id, CreateScheduleDTO createScheduleDTO) {
-        List<String> violations = validate(createScheduleDTO);
-        if (!violations.isEmpty()) {
+        ValidationResult violations = validate(createScheduleDTO);
+        if (!violations.violations().isEmpty()) {
             throw new RuntimeException("Schedule validation failed: " + violations);
         }
 
@@ -94,7 +95,7 @@ public class ScheduleCommandService {
     }
 
     @ManagerOwnerOnly
-    public List<String> validate(CreateScheduleDTO createScheduleDTO) {
+    public ValidationResult validate(CreateScheduleDTO createScheduleDTO) {
         return scheduleValidator.validate(createScheduleDTO.getShifts(), createScheduleDTO);
     }
 
