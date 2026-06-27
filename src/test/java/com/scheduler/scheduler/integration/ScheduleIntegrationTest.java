@@ -289,15 +289,22 @@ public class ScheduleIntegrationTest {
 
     @Test
     void createSchedule_shouldCalculatePositiveOvertimeHours() throws Exception {
-        // 6 zmian x 8h = 48h, w 5-dniowym tygodniu target = 40h, overtime = 8h
-        CreateScheduleDTO dto = buildValidSchedule();
+        // Tydzień 9-15.11.2026 — środa 11.11 to Święto Niepodległości
+        // target = 4 × 8h = 32h, pracownik pracuje 5 dni × 8h = 40h → overtime > 0
+        // Praca w święto = warning (nie violation) — legalne w branżach 24/7
+        LocalDateTime ws = LocalDateTime.of(2026, 11, 9, 0, 0);
+        LocalDateTime we = LocalDateTime.of(2026, 11, 15, 23, 59, 59);
+        CreateScheduleDTO dto = new CreateScheduleDTO();
+        dto.setWeekStart(ws);
+        dto.setWeekEnd(we);
+        dto.setCreatedBy_id(managerId);
+        dto.setOrganizationId(organizationId);
         dto.setShifts(List.of(
-                buildShift(employeeId, MON, 8, 16),
-                buildShift(employeeId, TUE, 8, 16),
-                buildShift(employeeId, WED, 8, 16),
-                buildShift(employeeId, THU, 8, 16),
-                buildShift(employeeId, FRI, 8, 16),
-                buildShift(employeeId, SAT(), 8, 16)
+                buildShift(employeeId, LocalDateTime.of(2026, 11, 9,  0, 0), 8, 16),
+                buildShift(employeeId, LocalDateTime.of(2026, 11, 10, 0, 0), 8, 16),
+                buildShift(employeeId, LocalDateTime.of(2026, 11, 11, 0, 0), 8, 16),
+                buildShift(employeeId, LocalDateTime.of(2026, 11, 12, 0, 0), 8, 16),
+                buildShift(employeeId, LocalDateTime.of(2026, 11, 13, 0, 0), 8, 16)
         ));
 
         mockMvc.perform(post("/api/schedule")
