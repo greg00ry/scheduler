@@ -18,8 +18,7 @@ public class OrganizationFilterAspect {
 
     @Before("execution(* com.scheduler.scheduler.repository.*.*(..))")
     public void applyOrganizationFilter(JoinPoint joinPoint) {
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        if (signature.getMethod().isAnnotationPresent(SkipOrganizationFilter.class)) {
+        if (isCallerAnnotatedWithSkip()) {
             return;
         }
         Long orgId = OrganizationContext.get();
@@ -28,5 +27,21 @@ public class OrganizationFilterAspect {
                     .enableFilter(OrganizationContext.FILTER_NAME)
                     .setParameter("orgId", orgId);
         }
+    }
+
+    private boolean isCallerAnnotatedWithSkip() {
+        for (StackTraceElement element : Thread.currentThread().getStackTrace()) {
+            try {
+                Class<?> clazz = Class.forName(element.getClassName());
+                for (java.lang.reflect.Method method : clazz.getDeclaredMethods()) {
+                    if (method.getName().equals(element.getMethodName())
+                            && method.isAnnotationPresent(SkipOrganizationFilter.class)) {
+                        return true;
+                    }
+                }
+            } catch (ClassNotFoundException ignored) {
+            }
+        }
+        return false;
     }
 }

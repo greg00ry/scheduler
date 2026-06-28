@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(organizationContextFilter, JwtFilter.class);
+                .addFilterAfter(organizationContextFilter, JwtFilter.class);
         return http.build();
     }
     @Bean

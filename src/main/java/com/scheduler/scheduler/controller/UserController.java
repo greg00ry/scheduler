@@ -70,12 +70,3 @@ public class UserController {
         return userCommandService.deleteUser(id);
     }
 }
-//TODO: update readme
-//TODO: add archive schedule after a date
-//TODO: accepts absences by manager and admin
-//TODO: websockets for events with schedule
-//TODO: easy company chat
-//TODO: register endpoint
-//TODO: blockchain to saved schedule to ensure if nobody will delete old schedules
-//TODO: validation in UpdateUserDTO
-//TODO: walidacja dla grafiku tworzonego wstecz

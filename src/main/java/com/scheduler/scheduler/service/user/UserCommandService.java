@@ -7,6 +7,7 @@ import com.scheduler.scheduler.exception.ExistingUserException;
 import com.scheduler.scheduler.model.User;
 import com.scheduler.scheduler.repository.UserRepository;
 import com.scheduler.scheduler.security.annotation.ManagerOwnerOnly;
+import com.scheduler.scheduler.security.annotation.ManagerOwnerAdminOnly;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,7 +22,7 @@ public class UserCommandService {
     private final PasswordEncoder passwordEncoder;
 
 
-    @ManagerOwnerOnly
+    @ManagerOwnerAdminOnly
     @Transactional
     public UserDTO createUser(CreateUserDTO createUserDTO) throws ExistingUserException {
 

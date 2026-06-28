@@ -3,6 +3,7 @@ package com.scheduler.scheduler.service.orgaznization;
 import com.scheduler.scheduler.dto.organization.CreateOrganizationDTO;
 import com.scheduler.scheduler.dto.organization.OrganizationDTO;
 import com.scheduler.scheduler.model.Organization;
+import com.scheduler.scheduler.model.User;
 import com.scheduler.scheduler.repository.OrganizationRepository;
 import com.scheduler.scheduler.repository.UserRepository;
 import com.scheduler.scheduler.security.annotation.AdminOnly;
@@ -57,15 +58,19 @@ public class OrganizationService {
     @AdminOnly
     @Transactional
     public OrganizationDTO createOrganization(CreateOrganizationDTO createOrganizationDTO) {
+        User owner = userRepository.findById(createOrganizationDTO.getOwnerId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
         Organization organization = new Organization();
         organization.setName(createOrganizationDTO.getName());
-        organization.setOwner(userRepository.findById(createOrganizationDTO.getOwnerId())
-                .orElseThrow(() -> new RuntimeException("User not found")));
+        organization.setOwner(owner);
         organization.setActive(true);
         organizationRepository.save(organization);
+        owner.setOrganization(organization);
+        userRepository.save(owner);
         OrganizationDTO dto = new OrganizationDTO();
+        dto.setId(organization.getId());
         dto.setName(organization.getName());
-        dto.setOwnerId(organization.getOwner().getId());
+        dto.setOwnerId(owner.getId());
         return dto;
     }
     @AdminOnly
